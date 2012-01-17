@@ -14,7 +14,7 @@ JSBuilder.compile(
     'build/es6-collections.js',
     'build/es6-collections.min.js',
     [
-        "es6-collections"
+        "es6-collections.js"
     ]
 )
 print ("----------------------")
