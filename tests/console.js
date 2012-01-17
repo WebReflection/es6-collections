@@ -4,11 +4,11 @@ if (typeof require != "undefined") {
 } else {
   load(
       new java.io.File(".").getCanonicalPath() + 
-      "/../src/es6-collections.js"
+      "/src/es6-collections.js"
   );
   load(
       new java.io.File(".").getCanonicalPath() + 
-      "/es6-collections.js"
+      "/tests/es6-collections.js"
   );
 }
 
