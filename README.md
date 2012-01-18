@@ -18,8 +18,8 @@ Features
 
 Alternatives
 ------------
-  * the bigger and rich of dependencies [shim from Mark S. Miller](http://code.google.com/p/es-lab/source/browse/trunk/src/ses/WeakMap.js), the best attempt to avoid undesired memory leasks. Bear in mind while this shim is better leaks speaking, **it's simply not possible to avoid 100% leaks in ES5**.
-  * the unfortunately slower and heavier, memory usage speaking, still leaks prone alternative from [Benvie Harmony Collections Shim](https://github.com/Benvie/ES6-Harmony-Collections-Shim)
+  * the bigger and rich in dependencies [shim from Mark S. Miller](http://code.google.com/p/es-lab/source/browse/trunk/src/ses/WeakMap.js), the best attempt to avoid undesired memory leasks. Bear in mind while this shim is better leaks speaking, **it's simply not possible to create 100% WeakMap in ES5 only**.
+  * the unfortunately and so far slower and heavier, memory usage speaking, still leaks prone alternative from [Benvie Harmony Collections Shim](https://github.com/Benvie/ES6-Harmony-Collections-Shim)
 
 
 Tests
