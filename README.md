@@ -18,8 +18,8 @@ Features
 
 Alternatives
 ------------
-  * the bigger and rich of dependencies [shim from Mark S. Miller](http://code.google.com/p/es-lab/source/browse/trunk/src/ses/WeakMap.js), the best attempt to avoid undesired memory leasks
-  * the unfortunately slower and heavier, memory usage speaking, alternative from [Benvie Harmony Collections Shim](https://github.com/Benvie/ES6-Harmony-Collections-Shim)
+  * the bigger and rich of dependencies [shim from Mark S. Miller](http://code.google.com/p/es-lab/source/browse/trunk/src/ses/WeakMap.js), the best attempt to avoid undesired memory leasks. Bear in mind while this shim is better leaks speaking, **it's simply not possible to avoid 100% leaks in ES5**.
+  * the unfortunately slower and heavier, memory usage speaking, still leaks prone alternative from [Benvie Harmony Collections Shim](https://github.com/Benvie/ES6-Harmony-Collections-Shim)
 
 
 Tests
@@ -58,3 +58,10 @@ License
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
+
+
+Why
+---
+There is a difference between *I need it* and *I need it only if 100% the same of the native version*.
+Since **almost no shim in JavaScript world is 100% compatible with the native implementation**, you can choose to use at least a fast shim which aim is to bring the same API using best practices to both minify and boost up JS performances.
+If you think this is not good for you then wait until these collections are available natively and don't even bother.
