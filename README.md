@@ -20,7 +20,7 @@ The WeakMap Is Not Weak ... And Why
 -----------------------------------
   * first of all, **ES6 Collections is not about WeakMap only** ... most likely is about **Map** ... anyway ...
   * **O(n)** against **O(1)** to link *keyObject* and value is a **no-go** for different reasons:
-    * the random property attached to the object will be easily discoverable via *for/in* loop in all non ES5 capable browsers, **obtrusive**
+    * the random property attached to the object will be easily discoverable via *for/in* loop in all non ES5 capable engines, **obtrusive**
     * even in ES5 capable browser, to make the random property not discoverable we need to wrap native *Object.defineProperty*, *Object.defineProperties*, *Object.create*, *Object.getOwnPropertyNames*, plus eventually *Proxy*, which means the whole application will be **O(n) times slower for everything**, not Map or WeakMap only
     * there are **situations where a random property cannot be attached**, as example in Internet Explorer some object exposed in JavaScript may not accept runtime attached properties. The purpose of this shim is to be as cross platform as possible and **as safe as possible while others polyfills are able to break**, just as example, objects defined via [VB Classes](http://code.google.com/p/vbclass/)
   * it's simply not possible to create 100% WeakMap in ES5 only, the aim of this polyfill is to bring a 1:1 unobtrusive and reliable API rather than 1:1 implementation
