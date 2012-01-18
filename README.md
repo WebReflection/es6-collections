@@ -25,6 +25,7 @@ The WeakMap Is Not Weak ... And Why
     * there are **situations where a random property cannot be attached**, as example in Internet Explorer some object exposed in JavaScript may not accept runtime attached properties. The purpose of this shim is to be as cross platform as possible and **as safe as possible while others polyfills are able to break**, just as example, objects defined via [VB Classes](http://code.google.com/p/vbclass/)
   * it's simply not possible to create 100% WeakMap in ES5 only, the aim of this polyfill is to bring a 1:1 unobtrusive and reliable API rather than 1:1 implementation
   * if you think WeakMap, never existed until now, are the only thing you need, you may consider the first proposed alternative and simply walk away from this page
+  * a polyfill aim is to bring a reliable API until the browser supports it and you can simply remove the polyfill dependency. The perfect implementation may be unnecessary, in this case obtrusive, or simply [YAGNI](http://en.wikipedia.org/wiki/You_ain't_gonna_need_it)
 
 
 Alternatives
