@@ -9,17 +9,28 @@ These global functions are already available in Firefox Nightly and Chrome Dev c
 Features
 --------
   * compatible with **all browsers** and both **node.js** (`npm install es6-collections`) and **Rhino**
-  * unobtrusive with any environment. If implemented in node V8 it exports native constructors rather than shims
+  * **100% unobtrusive** with any environment. If implemented in node V8 it exports native constructors rather than shims
   * **size and performances oriented** polyfill. It does not matter if the WeakMap is not perfect, it's just fast and not much more memory leaks prone than other shims. If you don't rely in magic, simply remember to `wm.delete(referedObject)` when *referedObject* is not needed anymore.
   * for browsers, it fits in **less than 1Kb** [once minzipped](https://github.com/WebReflection/es6-collections/blob/master/build/es6-collections.min.js) ... the smallest shim out there so far
   * 100% of code coverage through [Web](https://github.com/WebReflection/es6-collections/blob/master/tests/web.html) or [console](https://github.com/WebReflection/es6-collections/blob/master/tests/console.js) [wru](https://github.com/WebReflection/wru) based [tests](https://github.com/WebReflection/es6-collections/blob/master/tests/es6-collections.js)
   * completely private shared behavior in order to easily maintain and update three collections at once
 
 
+The WeakMap Is Not Weak ... And Why
+-----------------------------------
+  * first of all, **ES6 Collections is not about WeakMap only** ... most likely is about **Map** ... anyway ...
+  * **O(n)** against **O(1)** to link *keyObject* and value is a **no-go** for different reasons:
+    * the random property attached to the object will be easily discoverable via *for/in* loop in all non ES5 capable browsers, **obtrusive**
+    * even in ES5 capable browser, to make the random property not discoverable we need to wrap native *Object.defineProperty*, *Object.defineProperties*, *Object.create*, and eventually *Proxy*, which means the whole application will be **O(n) times slower for everything**, not Map or WeakMap only
+    * there are **situations where a random property cannot be attached**, as example in Internet Explorer some object exposed in JavaScript may not accept runtime attached properties. The purpose of this shim is to be as cross platform as possible and **as safe as possible while others polyfills are able to break**, just as example, objects defined via [VB Classes](http://code.google.com/p/vbclass/)
+  * it's simply not possible to create 100% WeakMap in ES5 only, the aim of this polyfill is to bring a 1:1 unobtrusive and reliable API rather than 1:1 implementation
+  * if you think WeakMap, never existed until now, are the only thing you need, you may consider the first proposed alternative and simply walk away from this page
+
+
 Alternatives
 ------------
-  * the bigger and rich in dependencies [shim from Mark S. Miller](http://code.google.com/p/es-lab/source/browse/trunk/src/ses/WeakMap.js), the best attempt to avoid undesired memory leasks. Bear in mind while this shim is better leaks speaking, **it's simply not possible to create 100% WeakMap in ES5 only**.
-  * the unfortunately and so far slower and heavier, memory usage speaking, still leaks prone alternative from [Benvie Harmony Collections Shim](https://github.com/Benvie/ES6-Harmony-Collections-Shim)
+  * the bigger and rich in dependencies [WeakMap shim from Mark S. Miller](http://code.google.com/p/es-lab/source/browse/trunk/src/ses/WeakMap.js), the best attempt to avoid undesired memory leaks. Bear in mind some leak is still possible plus *Object* natives are wrapped plus it brings WeakMap only
+  * the unfortunately and so far slower and heavier, memory usage speaking, alternative from [Benvie Harmony Collections Shim](https://github.com/Benvie/ES6-Harmony-Collections-Shim)
 
 
 Tests
@@ -58,11 +69,3 @@ License
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
-
-
-Why ( ... or the WeakMap is not weak )
---------------------------------------
-There is a difference between *I need it* and *I need it only if 100% the same of the native version*.
-Since **almost no shim in JavaScript world is 100% compatible with the native implementation**, you can choose to use at least a fast shim which aim is to bring the same API using best practices to both minify and boost up JS performances.
-If you think this is not good for you then wait until these collections are available natively or choose alternatives still memory leaks prone.
-Of course you are welcome to create your native C++ version for node.js, which V8 will bring these constructors there soon, then you probably need to remember that JS should work with browsers too.
