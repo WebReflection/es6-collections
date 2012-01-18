@@ -35,7 +35,7 @@ To build the browser version from the root of this project folder simply write `
 
 
 License
-=======
+-------
 
 *es6-collections* and the rest of the project is under Mit Style License
 
@@ -64,4 +64,5 @@ Why
 ---
 There is a difference between *I need it* and *I need it only if 100% the same of the native version*.
 Since **almost no shim in JavaScript world is 100% compatible with the native implementation**, you can choose to use at least a fast shim which aim is to bring the same API using best practices to both minify and boost up JS performances.
-If you think this is not good for you then wait until these collections are available natively and don't even bother.
+If you think this is not good for you then wait until these collections are available natively or choose alternatives still memory leaks prone.
+Of course you are welcome to create your native C++ version for node.js, which V8 will bring these constructors there soon, then you probably need to remember that JS should work with browsers too.
