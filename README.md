@@ -60,8 +60,8 @@ License
     THE SOFTWARE.
 
 
-Why
----
+Why ( ... or the WeakMap is not weak )
+--------------------------------------
 There is a difference between *I need it* and *I need it only if 100% the same of the native version*.
 Since **almost no shim in JavaScript world is 100% compatible with the native implementation**, you can choose to use at least a fast shim which aim is to bring the same API using best practices to both minify and boost up JS performances.
 If you think this is not good for you then wait until these collections are available natively or choose alternatives still memory leaks prone.
