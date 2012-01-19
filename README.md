@@ -32,6 +32,8 @@ Alternatives
 ------------
   * the bigger and rich in dependencies [WeakMap shim from Mark S. Miller](http://code.google.com/p/es-lab/source/browse/trunk/src/ses/WeakMap.js), the best attempt to avoid undesired memory leaks. Bear in mind some leak is still possible plus *Object* natives are wrapped plus it brings WeakMap only
   * the unfortunately and so far slower and heavier, memory usage speaking, alternative from [Benvie Harmony Collections Shim](https://github.com/Benvie/ES6-Harmony-Collections-Shim)
+  * light but not fully implemented Map and Set from [Paul Millr](https://github.com/paulmillr/es6-shim), together with few others ES6 prototypes
+  * another attempt based on valueOf to avoid IE enumerability, still problematic with *unknown* objects but less leaks prone from [Gozala](https://gist.github.com/1269991)
 
 
 Tests
