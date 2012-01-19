@@ -90,9 +90,7 @@
     ;
     return create(SetPrototype, {
       // Set#add(value:void*):boolean
-      add:      {value: function add(value) {
-                  return (!has(value) && !!values.push(value));
-                }},
+      add:      {value: bind.call(Set_add, NULL, FALSE, has, values)},
       // Set#delete(value:void*):boolean
       "delete": {value: bind.call(sharedDel, NULL, FALSE, values, keys)},
       // Set#has(value:void*):boolean
@@ -100,13 +98,7 @@
       // Set#values(void):Array
       values:   {value: boundSlice(values)},
       // Set#iterate(callback:Function, context:void*):void ==> callback.call(context, value, index)
-      iterate:  {value: function iterate(callback, context) {
-                  for (var
-                    v = slice.call(values),
-                    i = 0, length = v.length;
-                    i < length; callback.call(context, v[i], i++)
-                  );
-                }}
+      iterate:  {value: bind.call(Set_iterate, NULL, FALSE, NULL, values)}
     });
   }
 
@@ -151,6 +143,19 @@
     return function () {
       return slice.call(values);
     };
+  }
+
+  // Set#add/iterate recycled through bind per each instanceof Set
+  function Set_add(objectOnly, has, values, value) {
+    return (!has(value) && !!values.push(value));
+  }
+
+  function Set_iterate(objectOnly, keys, values, callback, context) {
+    for (var
+      v = slice.call(values),
+      i = 0, length = v.length;
+      i < length; callback.call(context, v[i], i++)
+    );
   }
 
   // need for an empty constructor ...

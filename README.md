@@ -39,7 +39,7 @@ Alternatives
 Tests
 -----
 To run tests via **node.js** from the root folder of this project simply write `node tests/console.js`.
-To run tests via **Rhino** from the root folder of this project simply write 'java -jar builder/jar/js.jar tests/console.js'.
+To run tests via **Rhino** from the root folder of this project simply write `java -jar builder/jar/js.jar tests/console.js`.
 To run test via **browser** simply drag and drop **tests/web.html** file.
 
 
