@@ -1,14 +1,30 @@
 {
-    "name": "es6-collections"
-  , "version": "0.2.0"
-  , "description": "ES6 Harmony like collections such Map, WeakMap, and Set"
-  , "homepage": "https://github.com/WebReflection/es6-collections"
-  , "keywords": ["WeakMap", "Map", "Set", "shim", "polyfill", "ES6", "Harmony"]
-  , "author": "Andrea Giammarchi"
-  , "repository":{
-        "type": "git"
-      , "url": "https://github.com/WebReflection/es6-collections.git"
-    }
-  , "main": "./src/es6-collections.js"
-  , "engines": { "node": ">= 0.4.0" }
+  "name": "es6-collections",
+  "version": "0.2.0",
+  "description": "ES6 Harmony like collections such Map, WeakMap, and Set",
+  "homepage": "https://github.com/WebReflection/es6-collections",
+  "keywords": [
+    "WeakMap",
+    "Map",
+    "Set",
+    "shim",
+    "polyfill",
+    "ES6",
+    "Harmony"
+  ],
+  "author": "Andrea Giammarchi <andrea.giammarchi@gmail.com> (http://webreflection.blogspot.com/)",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/WebReflection/es6-collections.git"
+  },
+  "main": "./src/es6-collections.js",
+  "engines": {
+    "node": ">= 0.4.0"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "scripts": {
+    "test": "node tests/console.js"
+  }
 }
