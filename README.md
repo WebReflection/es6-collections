@@ -16,6 +16,14 @@ Features
   * completely private shared behavior in order to easily maintain and update three collections at once
 
 
+New On Version 0.2.0
+--------------------
+  * **removed** both **keys** and **values** properties since these are not in specs anymore
+  * improved checks in order to do not fail with **NaN** or **-0** and **+0** as specified via specs
+  * native Array.prototype.indexOf used when key/value to retrieve is not **NaN** or **-0** and **+0** (performances regardless checks)
+  * updated **tests** including all methods behaviors plus `(Map|Set)#size()` test for **Mozilla only**
+
+
 The WeakMap Is Not Weak ... And Why
 -----------------------------------
   * first of all, **ES6 Collections is not about WeakMap only** ... most likely is about **Map** ... anyway ...
@@ -32,7 +40,7 @@ Alternatives
 ------------
   * the bigger and rich in dependencies [WeakMap shim from Mark S. Miller](http://code.google.com/p/es-lab/source/browse/trunk/src/ses/WeakMap.js), the best attempt to avoid undesired memory leaks. Bear in mind some leak is still possible plus *Object* natives are wrapped plus it brings WeakMap only
   * the unfortunately and so far slower and heavier, memory usage speaking, alternative from [Benvie Harmony Collections Shim](https://github.com/Benvie/ES6-Harmony-Collections-Shim)
-  * light but not fully implemented Map and Set from [Paul Millr](https://github.com/paulmillr/es6-shim), together with few others ES6 prototypes
+  * differently implemented Map and Set (no WeakMap) from [Paul Millr](https://github.com/paulmillr/es6-shim), together with few others ES6 prototypes
   * another attempt based on valueOf to avoid IE enumerability, still problematic with *unknown* objects but less leaks prone from [Gozala](https://gist.github.com/1269991)
 
 

@@ -104,6 +104,20 @@ function wru(wru){
         }
       }
     },{
+      name: "Map#size - Mozilla only",
+      test: function () {
+        var
+          o = Map()
+        ;
+        if ("size" in o) {
+          assert("initial size is 0", o.size() === 0);
+          o.set("a", "a");
+          assert("size reflects internal keys length", o.size() === 1);
+          o["delete"]("a");
+          assert("after deleting size is 0 again", o.size() === 0);
+        }
+      }
+    },{
       name: "Map#has",
       test: function () {
         var
@@ -144,6 +158,19 @@ function wru(wru){
         assert("o", o.get(callback) === o);
         o.set(o, callback);
         assert("callback", o.get(o) === callback);
+        o.set(NaN, generic);
+        assert("NaN as valid key", o.has(NaN));
+        assert("NaN key returns expected value", o.get(NaN) === generic);
+        o.set("key", undefined);
+        assert("undefined value is stored", o.has("key"));
+        assert("undefined value is retrieved", o.get("key") === undefined);
+        
+        o.set(-0, callback);
+        o.set(0, generic);
+        assert("-0 as valid key", o.has(-0));
+        assert("-0 returns the expected value", o.get(-0) === callback);
+        assert("0 as valid key", o.has(0));
+        assert("0 returns the expected value", o.get(0) === generic);
       }
     }, {
       name: "Map#['delete']",
@@ -181,14 +208,18 @@ function wru(wru){
       test: function () {
         var o = Map();
         o.set("key", "value");
-        assert("keys as array", o.keys() instanceof Array);
-        assert("only one key", o.keys().length === 1);
-        assert("key is correct", o.keys()[0] === "key");
-        assert("no slice", o.keys(1).join("") === o.keys().join(""));
-        assert("values as array", o.values() instanceof Array);
-        assert("only one value", o.values().length === 1);
-        assert("value is correct", o.values()[0] === "value");
-        assert("no slice", o.values(1).join("") === o.values().join(""));
+        if ("keys" in o) {
+          assert("keys as array", o.keys() instanceof Array);
+          assert("only one key", o.keys().length === 1);
+          assert("key is correct", o.keys()[0] === "key");
+          assert("no slice", o.keys(1).join("") === o.keys().join(""));
+        }
+        if ("values" in o) {
+          assert("values as array", o.values() instanceof Array);
+          assert("only one value", o.values().length === 1);
+          assert("value is correct", o.values()[0] === "value");
+          assert("no slice", o.values(1).join("") === o.values().join(""));
+        }
       }
     }, {
       name: "Map#iterate",
@@ -196,16 +227,18 @@ function wru(wru){
         var o = Map(), i;
         o.set("key 0", "value 0");
         o.set("key 1", "value 1");
-        o.iterate(function (key, value, index) {
-          assert("correct key", key === "key " + index);
-          assert("correct value", value === "value " + index);
-          assert("correct index", i == null ? index === 0 : index === 1);
-          i = index;
-          // even if dropped, keeps looping
-          o["delete"](key);
-        });
-        assert("looped twice", i === 1);
-        assert("o is empty", !o.keys().length);
+        if ("iterate" in o) {
+          o.iterate(function (key, value, index) {
+            assert("correct key", key === "key " + index);
+            assert("correct value", value === "value " + index);
+            assert("correct index", i == null ? index === 0 : index === 1);
+            i = index;
+            // even if dropped, keeps looping
+            o["delete"](key);
+          });
+          assert("looped twice", i === 1);
+          assert("o is empty", !o.keys().length);
+        }
       }
     }, {
       name: "Set existence",
@@ -221,6 +254,27 @@ function wru(wru){
           assert("__proto__", Set().__proto__.isPrototypeOf(Set()));
           assert("same prototype", Set().__proto__ === Set.prototype);
         }
+      }
+    },{
+      name: "Set#size - Mozilla only",
+      test: function () {
+        var
+          o = Set()
+        ;
+        if ("size" in o) {
+          assert("initial size is 0", o.size() === 0);
+          o.add("a");
+          assert("size reflects internal values length", o.size() === 1);
+          o["delete"]("a");
+          assert("after deleting size is 0 again", o.size() === 0);
+        }
+      }
+    }, {
+      name: "Set#add",
+      test: function () {
+        var o = Set();
+        assert("add returns undefined", o.add(NaN) === undefined);
+        assert("once added, value is stored", o.has(NaN));
       }
     }, {
       name: "Set#['delete']",
@@ -240,17 +294,19 @@ function wru(wru){
         assert("has none of them", !o.has(callback) && !o.has(generic) && !o.has(o));
         assert("if not found, returns false", o["delete"](o) === false);
         o.add(o);
-        assert("if found and removed returns true", o["delete"](o));
+        assert("if found and removed returns true", o["delete"](o) === true);
       }
     }, {
       name: "values behavior",
       test: function () {
         var o = Set();
         o.add("value");
-        assert("values as array", o.values() instanceof Array);
-        assert("only one value", o.values().length === 1);
-        assert("value is correct", o.values()[0] === "value");
-        assert("no slice", o.values(1).join("") === o.values().join(""));
+        if ("values" in o) {
+          assert("values as array", o.values() instanceof Array);
+          assert("only one value", o.values().length === 1);
+          assert("value is correct", o.values()[0] === "value");
+          assert("no slice", o.values(1).join("") === o.values().join(""));
+        }
       }
     }, {
       name: "Set#has",
@@ -270,15 +326,17 @@ function wru(wru){
         var o = Set(), i;
         o.add("value 0");
         o.add("value 1");
-        o.iterate(function (value, index) {
-          assert("correct value", value === "value " + index);
-          assert("correct index", i == null ? index === 0 : index === 1);
-          i = index;
-          // even if dropped, keeps looping
-          o["delete"](value);
-        });
-        assert("looped twice", i === 1);
-        assert("o is empty", !o.values().length);
+        if ("iterate" in o) {
+          o.iterate(function (value, index) {
+            assert("correct value", value === "value " + index);
+            assert("correct index", i == null ? index === 0 : index === 1);
+            i = index;
+            // even if dropped, keeps looping
+            o["delete"](value);
+          });
+          assert("looped twice", i === 1);
+          assert("o is empty", !o.values().length);
+        }
       }
   }]);
 

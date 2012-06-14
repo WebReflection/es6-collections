@@ -53,13 +53,17 @@
       // Map#has(key:void*):boolean
       has:      {value: bind.call(sharedHas, NULL, FALSE, keys, values)},
       // Map#set(key:void*, value:void*):void
-      set:      {value: bind.call(sharedSet, NULL, FALSE, keys, values)},
-      // Map#keys(void):Array
+      set:      {value: bind.call(sharedSet, NULL, FALSE, keys, values)}
+      /*,
+      // Map#size(void):number === Mozilla only so far
+      size:     {value: bind.call(sharedSize, NULL, keys)},
+      // Map#keys(void):Array === not in specs
       keys:     {value: boundSlice(keys)},
-      // Map#values(void):Array
+      // Map#values(void):Array === not in specs
       values:   {value: boundSlice(values)},
-      // Map#iterate(callback:Function, context:void*):void ==> callback.call(context, key, value, index)
+      // Map#iterate(callback:Function, context:void*):void ==> callback.call(context, key, value, index) === not in specs
       iterate:  {value: bind.call(sharedIterate, NULL, FALSE, keys, values)}
+      //*/
     });
 
   }
@@ -89,16 +93,20 @@
       has = bind.call(sharedHas, NULL, FALSE, values, keys)
     ;
     return create(SetPrototype, {
-      // Set#add(value:void*):boolean
-      add:      {value: bind.call(Set_add, NULL, FALSE, has, values)},
       // Set#delete(value:void*):boolean
       "delete": {value: bind.call(sharedDel, NULL, FALSE, values, keys)},
       // Set#has(value:void*):boolean
       has:      {value: has},
-      // Set#values(void):Array
+      // Set#add(value:void*):boolean
+      add:      {value: bind.call(Set_add, NULL, FALSE, has, values)}
+      /*,
+      // Map#size(void):number === Mozilla only
+      size:     {value: bind.call(sharedSize, NULL, values)},
+      // Set#values(void):Array === not in specs
       values:   {value: boundSlice(values)},
-      // Set#iterate(callback:Function, context:void*):void ==> callback.call(context, value, index)
+      // Set#iterate(callback:Function, context:void*):void ==> callback.call(context, value, index) === not in specs
       iterate:  {value: bind.call(Set_iterate, NULL, FALSE, NULL, values)}
+      //*/
     });
   }
 
@@ -108,6 +116,7 @@
       keys.splice(i, 1);
       values.splice(i, 1);
     }
+    // Aurora here does it while Canary doesn't
     return -1 < i;
   }
 
@@ -119,8 +128,27 @@
     if (objectOnly && key !== Object(key))
       throw new TypeError("not a non-null object")
     ;
-    i = indexOf.call(keys, key);
+    i = betterIndexOf.call(keys, key);
     return -1 < i;
+  }
+
+  function sharedSet(objectOnly, keys, values, key, value) {
+    /* return */sharedHas(objectOnly, keys, values, key) ?
+      values[i] = value
+      :
+      values[keys.push(key) - 1] = value
+    ;
+  }
+
+  /* keys, values, and iterate related methods
+  function boundSlice(values) {
+    return function () {
+      return slice.call(values);
+    };
+  }
+
+  function sharedSize(keys) {
+    return keys.length;
   }
 
   function sharedIterate(objectOnly, keys, values, callback, context) {
@@ -131,31 +159,28 @@
     );
   }
 
-  function sharedSet(objectOnly, keys, values, key, value) {
-    sharedHas(objectOnly, keys, values, key) ?
-      values[i] = value
-      :
-      values[keys.push(key) - 1] = value
-    ;
-  }
-
-  function boundSlice(values) {
-    return function () {
-      return slice.call(values);
-    };
-  }
-
-  // Set#add/iterate recycled through bind per each instanceof Set
-  function Set_add(objectOnly, has, values, value) {
-    return (!has(value) && !!values.push(value));
-  }
-
   function Set_iterate(objectOnly, keys, values, callback, context) {
     for (var
       v = slice.call(values),
       i = 0, length = v.length;
       i < length; callback.call(context, v[i], i++)
     );
+  }
+  //*/
+
+  // Set#add recycled through bind per each instanceof Set
+  function Set_add(objectOnly, has, values, value) {
+    /*return */(!has(value) && !!values.push(value));
+  }
+
+  // a more reliable indexOf
+  function betterIndexOf(value) {
+    if (value != value || value === 0) {
+      for (i = this.length; i-- && !is(this[i], value););
+    } else {
+      i = indexOf.call(this, value);
+    }
+    return i;
   }
 
   // need for an empty constructor ...
@@ -175,6 +200,14 @@
     SetPrototype = Set.prototype,
     defineProperty = Object.defineProperty,
     slice = [].slice,
+
+    // Object.is(a, b) shim
+    is = Object.is || function (a, b) {
+      return a === b ?
+        a !== 0 || 1 / a == 1 / b :
+        a != a && b != b
+      ;
+    },
 
     // partial polyfill for this aim only
     bind = WeakMap.bind || function bind(context, objectOnly, keys, values) {
@@ -200,9 +233,12 @@
       for (i = this.length; i-- && this[i] !== value;);
       return i;
     },
+
     undefined,
     i // recycle ALL the variables !
   ;
+
+  // ~indexOf.call([NaN], NaN) as future possible feature detection
 
   // used to follow FF behavior where WeakMap.prototype is a WeakMap itself
   WeakMap.prototype = WeakMapPrototype = WeakMap();
@@ -223,7 +259,7 @@
   }
   //*/
 
-  // that's pretty much it in less than 750 bytes minzipped
+  // that's pretty much it
 
 }.call(
   this,
