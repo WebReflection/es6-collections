@@ -1,0 +1,188 @@
+info it worked if it ends with ok
+verbose cli [ 'node', '/usr/local/bin/npm', 'publish' ]
+info using npm@1.1.24
+info using node@v0.6.19
+verbose /usr/local/bin/node node symlink
+verbose config file /Users/WebReflection/.npmrc
+verbose config file /usr/local/etc/npmrc
+verbose config file /usr/local/lib/node_modules/npm/npmrc
+verbose publish [ '.' ]
+verbose caching /Users/WebReflection/Desktop/es6-collections/package.json
+verbose loadDefaults es6-collections@0.2.0
+verbose cache add [ '.', null ]
+silly cache add: name, spec, args [ undefined, '.', [ '.', null ] ]
+verbose parsed url { pathname: '.', path: '.', href: '.' }
+verbose caching package.json
+verbose loadDefaults es6-collections@0.2.0
+verbose tar.pack [ '/var/folders/2r/tg1h85q57xj10zv948xfc5bw0000gn/T/npm-1339682217244/1339682217244-0.7001976328901947/tmp.tgz',
+verbose tar.pack   '.' ]
+verbose tarball /var/folders/2r/tg1h85q57xj10zv948xfc5bw0000gn/T/npm-1339682217244/1339682217244-0.7001976328901947/tmp.tgz
+verbose folder .
+info prepublish es6-collections@0.2.0
+verbose unpack /var/folders/2r/tg1h85q57xj10zv948xfc5bw0000gn/T/npm-1339682217244/1339682217244-0.7001976328901947/tmp.tgz
+silly gunzTarPerm modes [ '755', '644' ]
+silly extracting entry package.json
+silly extracting entry README.md
+silly extracting entry build/es6-collections.js
+silly extracting entry build/es6-collections.min.js
+silly extracting entry builder/build.py
+silly extracting entry builder/jar/js.jar
+silly extracting entry builder/jar/yuicompressor-2.4.6.jar
+silly extracting entry builder/JSBuilder.py
+silly extracting entry builder/JSBuilder.pyc
+silly extracting entry LICENSE.txt
+silly extracting entry src/es6-collections.js
+silly extracting entry tests/console.js
+silly extracting entry tests/es6-collections.js
+silly extracting entry tests/web.html
+verbose caching /var/folders/2r/tg1h85q57xj10zv948xfc5bw0000gn/T/npm-1339682217244/1339682217244-0.7001976328901947/package/package.json
+verbose loadDefaults es6-collections@0.2.0
+verbose from cache /var/folders/2r/tg1h85q57xj10zv948xfc5bw0000gn/T/npm-1339682217244/1339682217244-0.7001976328901947/package/package.json
+verbose tar.pack [ '/Users/WebReflection/.npm/es6-collections/0.2.0/package.tgz',
+verbose tar.pack   '/var/folders/2r/tg1h85q57xj10zv948xfc5bw0000gn/T/npm-1339682217244/1339682217244-0.7001976328901947/package' ]
+verbose tarball /Users/WebReflection/.npm/es6-collections/0.2.0/package.tgz
+verbose folder /var/folders/2r/tg1h85q57xj10zv948xfc5bw0000gn/T/npm-1339682217244/1339682217244-0.7001976328901947/package
+verbose unpack /Users/WebReflection/.npm/es6-collections/0.2.0/package.tgz
+silly gunzTarPerm modes [ '755', '644' ]
+silly extracting entry package.json
+silly extracting entry README.md
+silly extracting entry build/es6-collections.js
+silly extracting entry build/es6-collections.min.js
+silly extracting entry builder/build.py
+silly extracting entry builder/jar/js.jar
+silly extracting entry builder/jar/yuicompressor-2.4.6.jar
+silly extracting entry builder/JSBuilder.py
+silly extracting entry builder/JSBuilder.pyc
+silly extracting entry LICENSE.txt
+silly extracting entry src/es6-collections.js
+silly extracting entry tests/console.js
+silly extracting entry tests/es6-collections.js
+silly extracting entry tests/web.html
+verbose caching /Users/WebReflection/.npm/es6-collections/0.2.0/package/package.json
+verbose loadDefaults es6-collections@0.2.0
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 40960
+silly updated sha bytes 10987
+info shasum 276627c15c046fb39e87952ab80874504f758722
+info shasum /Users/WebReflection/.npm/es6-collections/0.2.0/package.tgz
+verbose from cache /Users/WebReflection/.npm/es6-collections/0.2.0/package/package.json
+verbose chmod /Users/WebReflection/.npm/es6-collections/0.2.0/package.tgz 644
+verbose chown [ '/Users/WebReflection/.npm/es6-collections/0.2.0/package.tgz',
+verbose chown   501,
+verbose chown   20 ]
+silly publish { name: 'es6-collections',
+silly publish   version: '0.2.0',
+silly publish   description: 'ES6 Harmony like collections such Map, WeakMap, and Set',
+silly publish   homepage: 'https://github.com/WebReflection/es6-collections',
+silly publish   keywords: [ 'WeakMap', 'Map', 'Set', 'shim', 'polyfill', 'ES6', 'Harmony' ],
+silly publish   author: { name: 'Andrea Giammarchi' },
+silly publish   repository: 
+silly publish    { type: 'git',
+silly publish      url: 'git://github.com/WebReflection/es6-collections.git' },
+silly publish   main: './src/es6-collections.js',
+silly publish   engines: { node: '>= 0.4.0' },
+silly publish   _npmUser: { name: 'WebReflection', email: 'andrea.giammarchi@gmail.com' },
+silly publish   _id: 'es6-collections@0.2.0',
+silly publish   dependencies: {},
+silly publish   devDependencies: {},
+silly publish   optionalDependencies: {},
+silly publish   _engineSupported: true,
+silly publish   _npmVersion: '1.1.24',
+silly publish   _nodeVersion: 'v0.6.19',
+silly publish   _defaultsLoaded: true,
+silly publish   dist: 
+silly publish    { shasum: '276627c15c046fb39e87952ab80874504f758722',
+silly publish      tarball: 'http://registry.npmjs.org/es6-collections/-/es6-collections-0.2.0.tgz' },
+silly publish   readme: 'ES6 Harmony Collections Fast Polyfill\n===========================================\n\nThe aim of this repository is to provide an **unobtrusive, performances oriented** shim for ES6 collections such **WeakMap**, **Map**, and **Set**.\n\nThese global functions are already available in Firefox Nightly and Chrome Dev channel through *Enable Experimental JavaScript* in *chrome://flags/* section.\n\n\nFeatures\n--------\n  * compatible with **all browsers** and both **node.js** (`npm install es6-collections`) and **Rhino**\n  * **100% unobtrusive** with any environment. If implemented in node V8 it exports native constructors rather than shims\n  * **size and performances oriented** polyfill. It does not matter if the WeakMap is not perfect, it\'s just fast and not much more memory leaks prone than other shims. If you don\'t rely in magic, simply remember to `wm.delete(referedObject)` when *referedObject* is not needed anymore.\n  * for browsers, it fits in **less than 1Kb** [once minzipped](https://github.com/WebReflection/es6-collections/blob/master/build/es6-collections.min.js) ... the smallest shim out there so far\n  * 100% of code coverage through [Web](https://github.com/WebReflection/es6-collections/blob/master/tests/web.html) or [console](https://github.com/WebReflection/es6-collections/blob/master/tests/console.js) [wru](https://github.com/WebReflection/wru) based [tests](https://github.com/WebReflection/es6-collections/blob/master/tests/es6-collections.js)\n  * completely private shared behavior in order to easily maintain and update three collections at once\n\n\nNew On Version 0.2.0\n--------------------\n  * **removed** both **keys** and **values** properties since these are not in specs anymore\n  * improved checks in order to do not fail with **NaN** or **-0** and **+0** as specified via specs\n  * native Array.prototype.indexOf used when key/value to retrieve is not **NaN** or **-0** and **+0** (performances regardless checks)\n  * updated **tests** including all methods behaviors plus `(Map|Set)#size()` test for **Mozilla only**\n\n\nThe WeakMap Is Not Weak ... And Why\n-----------------------------------\n  * first of all, **ES6 Collections is not about WeakMap only** ... most likely is about **Map** ... anyway ...\n  * **O(n)** against **O(1)** to link *keyObject* and value is a **no-go** for different reasons:\n    * the random property attached to the object will be easily discoverable via *for/in* loop in all non ES5 capable engines, **obtrusive**\n    * even in ES5 capable browser, to make the random property not discoverable we need to wrap native *Object.defineProperty*, *Object.defineProperties*, *Object.create*, *Object.getOwnPropertyNames*, plus eventually *Proxy*, which means the whole application will be **O(n) times slower for everything**, not Map or WeakMap only\n    * there are **situations where a random property cannot be attached**, as example in Internet Explorer some object exposed in JavaScript may not accept runtime attached properties. The purpose of this shim is to be as cross platform as possible and **as safe as possible while others polyfills are able to break**, just as example, objects defined via [VB Classes](http://code.google.com/p/vbclass/)\n  * it\'s simply not possible to create 100% WeakMap in ES5 only, the aim of this polyfill is to bring a 1:1 unobtrusive and reliable API rather than 1:1 implementation\n  * if you think WeakMap, never existed until now, is the only thing you need, you may consider the first proposed alternative and simply walk away from this page\n  * a polyfill aim is to bring a reliable API until the browser supports it and you can simply remove the polyfill dependency. The perfect implementation may be unnecessary, in this case obtrusive, or simply [YAGNI](http://en.wikipedia.org/wiki/You_ain\'t_gonna_need_it)\n\n\nAlternatives\n------------\n  * the bigger and rich in dependencies [WeakMap shim from Mark S. Miller](http://code.google.com/p/es-lab/source/browse/trunk/src/ses/WeakMap.js), the best attempt to avoid undesired memory leaks. Bear in mind some leak is still possible plus *Object* natives are wrapped plus it brings WeakMap only\n  * the unfortunately and so far slower and heavier, memory usage speaking, alternative from [Benvie Harmony Collections Shim](https://github.com/Benvie/ES6-Harmony-Collections-Shim)\n  * differently implemented Map and Set (no WeakMap) from [Paul Millr](https://github.com/paulmillr/es6-shim), together with few others ES6 prototypes\n  * another attempt based on valueOf to avoid IE enumerability, still problematic with *unknown* objects but less leaks prone from [Gozala](https://gist.github.com/1269991)\n\n\nTests\n-----\nTo run tests via **node.js** from the root folder of this project simply write `node tests/console.js`.\nTo run tests via **Rhino** from the root folder of this project simply write `java -jar builder/jar/js.jar tests/console.js`.\nTo run test via **browser** simply drag and drop **tests/web.html** file.\n\n\nBuild\n-----\nTo build the browser version from the root of this project folder simply write `python builder/build.py`.\n\n\nLicense\n-------\n\n*es6-collections* and the rest of the project is under Mit Style License\n\n    Copyright (C) 2011 by Andrea Giammarchi, @WebReflection\n    \n    Permission is hereby granted, free of charge, to any person obtaining a copy\n    of this software and associated documentation files (the "Software"), to deal\n    in the Software without restriction, including without limitation the rights\n    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n    copies of the Software, and to permit persons to whom the Software is\n    furnished to do so, subject to the following conditions:\n    \n    The above copyright notice and this permission notice shall be included in\n    all copies or substantial portions of the Software.\n    \n    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\n    THE SOFTWARE.\n' }
+verbose raw, before any munging es6-collections
+verbose url resolving [ 'https://registry.npmjs.org/', './es6-collections' ]
+verbose url resolved https://registry.npmjs.org/es6-collections
+http PUT https://registry.npmjs.org/es6-collections
+http 409 https://registry.npmjs.org/es6-collections
+verbose raw, before any munging es6-collections
+verbose url resolving [ 'https://registry.npmjs.org/', './es6-collections' ]
+verbose url resolved https://registry.npmjs.org/es6-collections
+http GET https://registry.npmjs.org/es6-collections
+http 200 https://registry.npmjs.org/es6-collections
+verbose raw, before any munging es6-collections/0.2.0/-tag/latest
+verbose url resolving [ 'https://registry.npmjs.org/',
+verbose url resolving   './es6-collections/0.2.0/-tag/latest' ]
+verbose url resolved https://registry.npmjs.org/es6-collections/0.2.0/-tag/latest
+http PUT https://registry.npmjs.org/es6-collections/0.2.0/-tag/latest
+http 403 https://registry.npmjs.org/es6-collections/0.2.0/-tag/latest
+ERR! Error sending version data
+ERR! Error: forbidden user: WebReflection not authorized to modify es6-collections
+ERR! Changed: dist-tags.latest "0.1.0" -> "0.2.0"
+ERR! Added: versions.0.2.0
+ERR! Changed: time.modified "2012-01-17T23:12:31.692Z" -> "2012-06-14T13:57:05.056Z"
+ERR! Added: time.0.2.0: es6-collections/0.2.0/-tag/latest
+ERR!     at Request._callback (/usr/local/lib/node_modules/npm/lib/utils/npm-registry-client/request.js:183:12)
+ERR!     at Request.callback (/usr/local/lib/node_modules/npm/node_modules/request/main.js:119:22)
+ERR!     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/main.js:605:16)
+ERR!     at Request.emit (events.js:67:17)
+ERR!     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/main.js:564:14)
+ERR!     at IncomingMessage.emit (events.js:88:20)
+ERR!     at HTTPParser.parserOnMessageComplete [as onMessageComplete] (http.js:130:23)
+ERR!     at CleartextStream.socketOnData [as ondata] (http.js:1288:20)
+ERR!     at CleartextStream._push (tls.js:375:27)
+ERR!     at SecurePair.cycle (tls.js:734:20)
+ERR! You may report this log at:
+ERR!     <http://github.com/isaacs/npm/issues>
+ERR! or email it to:
+ERR!     <npm-@googlegroups.com>
+ERR! 
+ERR! System Darwin 11.4.0
+ERR! command "node" "/usr/local/bin/npm" "publish"
+ERR! cwd /Users/WebReflection/Desktop/es6-collections
+ERR! node -v v0.6.19
+ERR! npm -v 1.1.24
+ERR! message forbidden user: WebReflection not authorized to modify es6-collections
+ERR! message Changed: dist-tags.latest "0.1.0" -> "0.2.0"
+ERR! message Added: versions.0.2.0
+ERR! message Changed: time.modified "2012-01-17T23:12:31.692Z" -> "2012-06-14T13:57:05.056Z"
+ERR! message Added: time.0.2.0: es6-collections/0.2.0/-tag/latest
+verbose exit [ 1, true ]
