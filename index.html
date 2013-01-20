@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Es6-collections by WebReflection</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Es6-collections</h1>
+        <h2>Map, WeakMap, and Set fast/simple shim for Harmony collections</h2>
+        <a href="https://github.com/WebReflection/es6-collections" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <p><a href="http://travis-ci.org/WebReflection/es6-collections"><img src="https://secure.travis-ci.org/WebReflection/es6-collections.png" alt="build status"></a></p>
+
+<h1>ES6 Harmony Collections Fast Polyfill</h1>
+
+<p>The aim of this repository is to provide an <strong>unobtrusive, performances oriented</strong> shim for ES6 collections such <strong>WeakMap</strong>, <strong>Map</strong>, and <strong>Set</strong>.</p>
+
+<p>These global functions are already available in Firefox Nightly and Chrome Dev channel through <em>Enable Experimental JavaScript</em> in <em>chrome://flags/</em> section.</p>
+
+<h2>Features</h2>
+
+<ul>
+<li>compatible with <strong>all browsers</strong> and both <strong>node.js</strong> (<code>npm install es6-collections</code>) and <strong>Rhino</strong>
+</li>
+<li>
+<strong>100% unobtrusive</strong> with any environment. If implemented in node V8 it exports native constructors rather than shims</li>
+<li>
+<strong>size and performances oriented</strong> polyfill. It does not matter if the WeakMap is not perfect, it's just fast and not much more memory leaks prone than other shims. If you don't rely in magic, simply remember to <code>wm.delete(referedObject)</code> when <em>referedObject</em> is not needed anymore.</li>
+<li>for browsers, it fits in <strong>less than 1Kb</strong> <a href="https://github.com/WebReflection/es6-collections/blob/master/build/es6-collections.min.js">once minzipped</a> ... the smallest shim out there so far</li>
+<li>100% of code coverage through <a href="https://github.com/WebReflection/es6-collections/blob/master/tests/web.html">Web</a> or <a href="https://github.com/WebReflection/es6-collections/blob/master/tests/console.js">console</a> <a href="https://github.com/WebReflection/wru">wru</a> based <a href="https://github.com/WebReflection/es6-collections/blob/master/tests/es6-collections.js">tests</a>
+</li>
+<li>completely private shared behavior in order to easily maintain and update three collections at once</li>
+</ul><h2>New On Version 0.2.0</h2>
+
+<ul>
+<li>
+<strong>removed</strong> both <strong>keys</strong> and <strong>values</strong> properties since these are not in specs anymore</li>
+<li>improved checks in order to do not fail with <strong>NaN</strong> or <strong>-0</strong> and <strong>+0</strong> as specified via specs</li>
+<li>native Array.prototype.indexOf used when key/value to retrieve is not <strong>NaN</strong> or <strong>-0</strong> and <strong>+0</strong> (performances regardless checks)</li>
+<li>updated <strong>tests</strong> including all methods behaviors plus <code>(Map|Set)#size()</code> test for <strong>Mozilla only</strong>
+</li>
+</ul><h2>The WeakMap Is Not Weak ... And Why</h2>
+
+<ul>
+<li>first of all, <strong>ES6 Collections is not about WeakMap only</strong> ... most likely is about <strong>Map</strong> ... anyway ...</li>
+<li>
+<strong>O(n)</strong> against <strong>O(1)</strong> to link <em>keyObject</em> and value is a <strong>no-go</strong> for different reasons:
+
+<ul>
+<li>the random property attached to the object will be easily discoverable via <em>for/in</em> loop in all non ES5 capable engines, <strong>obtrusive</strong>
+</li>
+<li>even in ES5 capable browser, to make the random property not discoverable we need to wrap native <em>Object.defineProperty</em>, <em>Object.defineProperties</em>, <em>Object.create</em>, <em>Object.getOwnPropertyNames</em>, plus eventually <em>Proxy</em>, which means the whole application will be <strong>O(n) times slower for everything</strong>, not Map or WeakMap only</li>
+<li>there are <strong>situations where a random property cannot be attached</strong>, as example in Internet Explorer some object exposed in JavaScript may not accept runtime attached properties. The purpose of this shim is to be as cross platform as possible and <strong>as safe as possible while others polyfills are able to break</strong>, just as example, objects defined via <a href="http://code.google.com/p/vbclass/">VB Classes</a>
+</li>
+</ul>
+</li>
+<li>it's simply not possible to create 100% WeakMap in ES5 only, the aim of this polyfill is to bring a 1:1 unobtrusive and reliable API rather than 1:1 implementation</li>
+<li>if you think WeakMap, never existed until now, is the only thing you need, you may consider the first proposed alternative and simply walk away from this page</li>
+<li>a polyfill aim is to bring a reliable API until the browser supports it and you can simply remove the polyfill dependency. The perfect implementation may be unnecessary, in this case obtrusive, or simply <a href="http://en.wikipedia.org/wiki/You_ain't_gonna_need_it">YAGNI</a>
+</li>
+</ul><h2>Alternatives</h2>
+
+<ul>
+<li>the bigger and rich in dependencies <a href="http://code.google.com/p/es-lab/source/browse/trunk/src/ses/WeakMap.js">WeakMap shim from Mark S. Miller</a>, the best attempt to avoid undesired memory leaks. Bear in mind some leak is still possible plus <em>Object</em> natives are wrapped plus it brings WeakMap only</li>
+<li>the unfortunately and so far slower and heavier, memory usage speaking, alternative from <a href="https://github.com/Benvie/ES6-Harmony-Collections-Shim">Benvie Harmony Collections Shim</a>
+</li>
+<li>differently implemented Map and Set (no WeakMap) from <a href="https://github.com/paulmillr/es6-shim">Paul Millr</a>, together with few others ES6 prototypes</li>
+<li>another attempt based on valueOf to avoid IE enumerability, still problematic with <em>unknown</em> objects but less leaks prone from <a href="https://gist.github.com/1269991">Gozala</a>
+</li>
+</ul><h2>Tests</h2>
+
+<p>To run tests via <strong>node.js</strong> from the root folder of this project simply write <code>node tests/console.js</code>.
+To run tests via <strong>Rhino</strong> from the root folder of this project simply write <code>java -jar builder/jar/js.jar tests/console.js</code>.
+To run test via <strong>browser</strong> simply drag and drop <strong>tests/web.html</strong> file.</p>
+
+<h2>Build</h2>
+
+<p>To build the browser version from the root of this project folder simply write <code>python builder/build.py</code>.</p>
+
+<h2>License</h2>
+
+<p><em>es6-collections</em> and the rest of the project is under Mit Style License</p>
+
+<pre><code>Copyright (C) 2011 by Andrea Giammarchi, @WebReflection
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+</code></pre>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/WebReflection/es6-collections/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/WebReflection/es6-collections/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/WebReflection/es6-collections"></a> is maintained by <a href="https://github.com/WebReflection">WebReflection</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
