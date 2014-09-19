@@ -1,14 +1,17 @@
 (function (module) {"use strict";
 
-  //!(C) WebReflection - Mit Style License
-  // size and performances oriented polyfill for ES6
-  // WeakMap, Map, and Set
-  // compatible with node.js, Rhino, any browser
-  // does not implement default vaule during wm.get()
-  // since ES.next won't probably do that
-  // use wm.has(o) ? wm.get(o) : d3fault; instead
+  /**
+   * !(C) WebReflection - Mit Style License
+   * size and performances oriented polyfill for ES6
+   * WeakMap, Map, and Set
+   * compatible with node.js, Rhino, any browser
+   * does not implement default vaule during wm.get()
+   * since ES.next won't probably do that
+   * use wm.has(o) ? wm.get(o) : d3fault; instead
+   */
 
-  // WeakMap(void):WeakMap
+
+  /** WeakMap(void):WeakMap */
   function WeakMap() {
 
     // private references holders
@@ -21,19 +24,18 @@
     // instanceof WeakMap in any case
     return create(WeakMapPrototype, {
       // WeakMap#delete(key:void*):boolean
-      "delete": {value: bind.call(sharedDel, NULL, TRUE, keys, values)},
+      "delete": {value: bind.call(sharedDel, null, true, keys, values)},
       //:was WeakMap#get(key:void*[, d3fault:void*]):void*
       // WeakMap#get(key:void*):void*
-      get:      {value: bind.call(sharedGet, NULL, TRUE, keys, values)},
+      get: {value: bind.call(sharedGet, null, true, keys, values)},
       // WeakMap#has(key:void*):boolean
-      has:      {value: bind.call(sharedHas, NULL, TRUE, keys, values)},
+      has: {value: bind.call(sharedHas, null, true, keys, values)},
       // WeakMap#set(key:void*, value:void*):void
-      set:      {value: bind.call(sharedSet, NULL, TRUE, keys, values)}
+      set: {value: bind.call(sharedSet, null, true, keys, values)}
     });
-
   }
 
-  // Map(void):Map
+  /** Map(void):Map */
   function Map() {
 
     // private references holders
@@ -46,30 +48,30 @@
     // instanceof WeakMap in any case
     return create(MapPrototype, {
       // Map#delete(key:void*):boolean
-      "delete": {value: bind.call(sharedDel, NULL, FALSE, keys, values)},
+      "delete": {value: bind.call(sharedDel, null, false, keys, values)},
       //:was Map#get(key:void*[, d3fault:void*]):void*
       // Map#get(key:void*):void*
-      get:      {value: bind.call(sharedGet, NULL, FALSE, keys, values)},
+      get:      {value: bind.call(sharedGet, null, false, keys, values)},
       // Map#has(key:void*):boolean
-      has:      {value: bind.call(sharedHas, NULL, FALSE, keys, values)},
+      has:      {value: bind.call(sharedHas, null, false, keys, values)},
       // Map#set(key:void*, value:void*):void
-      set:      {value: bind.call(sharedSet, NULL, FALSE, keys, values)}
+      set:      {value: bind.call(sharedSet, null, false, keys, values)}
       /*,
       // Map#size(void):number === Mozilla only so far
-      size:     {value: bind.call(sharedSize, NULL, keys)},
+      size:     {value: bind.call(sharedSize, null, keys)},
       // Map#keys(void):Array === not in specs
       keys:     {value: boundSlice(keys)},
       // Map#values(void):Array === not in specs
       values:   {value: boundSlice(values)},
       // Map#iterate(callback:Function, context:void*):void ==> callback.call(context, key, value, index) === not in specs
-      iterate:  {value: bind.call(sharedIterate, NULL, FALSE, keys, values)}
+      iterate:  {value: bind.call(sharedIterate, null, false, keys, values)}
       //*/
     });
-
   }
 
-  // Set(void):Set
   /**
+   * Set(void):Set
+   *
    * to be really honest, I would rather pollute Array.prototype
    * in order to have Set like behavior
    * Object.defineProperties(Array.prototype, {
@@ -89,28 +91,43 @@
   function Set() {
     var
       keys = [],  // placeholder used simply to recycle functions
-      values = [],// real storage
-      has = bind.call(sharedHas, NULL, FALSE, values, keys)
+      values = [] // real storage
     ;
     return create(SetPrototype, {
       // Set#delete(value:void*):boolean
-      "delete": {value: bind.call(sharedDel, NULL, FALSE, values, keys)},
+      "delete": {value: bind.call(sharedDel, null, false, values, keys)},
       // Set#has(value:void*):boolean
-      has:      {value: has},
+      has: {value: bind.call(sharedHas, null, false, values, keys)},
       // Set#add(value:void*):boolean
-      add:      {value: bind.call(Set_add, NULL, FALSE, has, values)}
-      /*,
+      add: {value: bind.call(Set_add, null, false, has, values)},
+      // Set#clear():
+      // clear: {value: bind.call()},
+      // entries: {value: bind.call()},
       // Map#size(void):number === Mozilla only
-      size:     {value: bind.call(sharedSize, NULL, values)},
+      size:     {value: bind.call(sharedSize, null, values)},
       // Set#values(void):Array === not in specs
-      values:   {value: boundSlice(values)},
+      // values:   {value: boundSlice(values)},
       // Set#iterate(callback:Function, context:void*):void ==> callback.call(context, value, index) === not in specs
-      iterate:  {value: bind.call(Set_iterate, NULL, FALSE, NULL, values)}
-      //*/
+      // forEach:  {value: bind.call(Set_iterate, null, false, null, values)}
     });
   }
 
-  // common shared method recycled for all shims through bind
+  /** WeakSet():WeakSet */
+  function WeakSet() {
+    var keys = [], values = [];
+
+    return create(WeakSetPrototype, {
+      add: {value: bind.call(Set_add, null, false, has, values)},
+      // Set#clear():
+      clear: {value: bind.call()},
+      // Set#delete(value:void*):boolean
+      "delete": {value: bind.call(sharedDel, null, false, values, keys)},
+      // Set#has(value:void*):boolean
+      has: {value: bind.call(sharedHas, null, false, values, keys)}
+    });
+  }
+
+  /** common shared method recycled for all shims through bind */
   function sharedDel(objectOnly, keys, values, key) {
     if (sharedHas(objectOnly, keys, values, key)) {
       keys.splice(i, 1);
@@ -168,12 +185,12 @@
   }
   //*/
 
-  // Set#add recycled through bind per each instanceof Set
+  /** Set#add recycled through bind per each instanceof Set */
   function Set_add(objectOnly, has, values, value) {
     /*return */(!has(value) && !!values.push(value));
   }
 
-  // a more reliable indexOf
+  /** a more reliable indexOf */
   function betterIndexOf(value) {
     if (value != value || value === 0) {
       for (i = this.length; i-- && !is(this[i], value););
@@ -188,9 +205,8 @@
   // ... so that new WeakMapInstance and new WeakMap
   // produces both an instanceof WeakMap
 
+  // shortcuts and ...
   var
-    // shortcuts and ...
-    NULL = null, TRUE = true, FALSE = false,
     notInNode = module == "undefined",
     window = notInNode ? this : global,
     module = notInNode ? {} : exports,
@@ -198,6 +214,7 @@
     WeakMapPrototype = WeakMap.prototype,
     MapPrototype = Map.prototype,
     SetPrototype = Set.prototype,
+    WeakSetPrototype = WeakSet.prototype,
     defineProperty = Object.defineProperty,
     slice = [].slice,
 
@@ -244,22 +261,14 @@
   WeakMap.prototype = WeakMapPrototype = WeakMap();
   Map.prototype = MapPrototype = Map();
   Set.prototype = SetPrototype = Set();
+  WeakSet.prototype = WeakSetPrototype = WeakSet();
 
   // assign it to the global context
   // if already there, e.g. in node, export native
   window.WeakMap = module.WeakMap = window.WeakMap || WeakMap;
   window.Map = module.Map = window.Map || Map;
   window.Set = module.Set = window.Set || Set;
-
-  /* probably not needed, add a slash to ensure non configurable and non writable
-  if (defineProperty) {
-    defineProperty(window, "WeakMap", {value: WeakMap});
-    defineProperty(window, "Map", {value: Map});
-    defineProperty(window, "Set", {value: Set});
-  }
-  //*/
-
-  // that's pretty much it
+  window.WeakSet = module.WeakSet = window.WeakSet || WeakSet;
 
 }.call(
   this,
