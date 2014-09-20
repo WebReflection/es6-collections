@@ -1,4 +1,4 @@
-ES6 Harmony Collections[![build status](https://secure.travis-ci.org/WebReflection/es6-collections.png)](http://travis-ci.org/WebReflection/es6-collections)
+ES6 Harmony Collections [![build status](https://secure.travis-ci.org/WebReflection/es6-collections.png)](http://travis-ci.org/WebReflection/es6-collections)
 ===========================================
 
 
