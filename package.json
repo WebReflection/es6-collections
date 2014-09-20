@@ -1,6 +1,6 @@
 {
   "name": "es6-collections",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "ES6 Harmony like collections such Map, WeakMap, and Set",
   "homepage": "https://github.com/WebReflection/es6-collections",
   "keywords": [
@@ -13,11 +13,13 @@
     "Harmony"
   ],
   "author": "Andrea Giammarchi <andrea.giammarchi@gmail.com> (http://webreflection.blogspot.com/)",
-   "contributors": [{
-    "name": "Dmitry Ivanov",
-    "email": "df.creative@gmail.com",
-    "url": "http://github.com/dfcreative"
-  }],
+  "contributors": [
+    {
+      "name": "Dmitry Ivanov",
+      "email": "df.creative@gmail.com",
+      "url": "http://github.com/dfcreative"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/WebReflection/es6-collections.git"
