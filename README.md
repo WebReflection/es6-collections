@@ -1,8 +1,10 @@
-[![build status](https://secure.travis-ci.org/WebReflection/es6-collections.png)](http://travis-ci.org/WebReflection/es6-collections)
+ES6 Harmony Collections[![build status](https://secure.travis-ci.org/WebReflection/es6-collections.png)](http://travis-ci.org/WebReflection/es6-collections)
+===========================================
+
+
 [![browser support](https://ci.testling.com/dfcreative/es6-collections.png)
 ](https://ci.testling.com/dfcreative/es6-collections)
-ES6 Harmony Collections Fast Polyfill
-===========================================
+
 
 The aim of this repository is to provide an **unobtrusive, performances oriented** shim for ES6 collections such **WeakMap**, **Map**, and **Set**.
 
