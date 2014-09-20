@@ -1,5 +1,6 @@
 var assert = require('better-assert');
-require('../index');
+// require('../index');
+require('../es6-collections.min');
 
 describe('ES Collections test', function(){
   it("WeakMap existence", function () {

@@ -33,12 +33,12 @@
     "closurecompiler": "~1.3.2",
     "better-assert": "~1.0.1",
     "mocha": "~1.21.4",
-    "autopolyfiller": "~1.3.0",
-    "browserify": "~5.12.0",
-    "tape": "~3.0.0"
+    "browserify": "~5.12.0"
   },
   "optionalDependencies": {},
   "scripts": {
+    "build": "npm run minify && npm run test",
+    "minify": "ccjs index.js > es6-collections.min.js",
     "test": "mocha"
   },
   "testling": {
