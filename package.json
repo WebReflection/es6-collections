@@ -13,11 +13,16 @@
     "Harmony"
   ],
   "author": "Andrea Giammarchi <andrea.giammarchi@gmail.com> (http://webreflection.blogspot.com/)",
+   "contributors": [{
+    "name": "Dmitry Ivanov",
+    "email": "df.creative@gmail.com",
+    "url": "http://github.com/dfcreative"
+  }],
   "repository": {
     "type": "git",
     "url": "git://github.com/WebReflection/es6-collections.git"
   },
-  "main": "./src/es6-collections.js",
+  "main": "./index.js",
   "engines": {
     "node": ">= 0.4.0"
   },
