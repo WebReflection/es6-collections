@@ -2,8 +2,6 @@ var assert = require('better-assert');
 require('../index');
 
 describe('ES Collections test', function(){
-
-
   it("WeakMap existence", function () {
     assert(WeakMap);
   });
@@ -12,8 +10,8 @@ describe('ES Collections test', function(){
     assert(new WeakMap instanceof WeakMap);
     assert(WeakMap() instanceof WeakMap);
     if ("__proto__" in {}) {
-      assert("__proto__", WeakMap().__proto__.isPrototypeOf(WeakMap()));
-      assert("same prototype", WeakMap().__proto__ === WeakMap.prototype);
+      assert(WeakMap().__proto__.isPrototypeOf(WeakMap()));
+      assert(WeakMap().__proto__ === WeakMap.prototype);
     }
   });
 
@@ -23,9 +21,9 @@ describe('ES Collections test', function(){
       generic = {},
       callback = function () {}
     ;
-    assert("not there yet", false === o.has(callback));
+    assert(false === o.has(callback));
     o.set(callback, generic);
-    assert("now it has it", true === o.has(callback));
+    assert(true === o.has(callback));
   });
 
   it("WeakMap#get", function () {
@@ -34,10 +32,10 @@ describe('ES Collections test', function(){
       generic = {},
       callback = function () {}
     ;
-    //:was assert("default", o.get(callback, 123) === 123);
+    //:was assert(o.get(callback, 123) === 123);
     o.set(callback, generic);
-    assert("generic with default", o.get(callback, 123) === generic);
-    assert("generic without default", o.get(callback) === generic);
+    assert(o.get(callback, 123) === generic);
+    assert(o.get(callback) === generic);
   });
 
   it("WeakMap#set", function () {
@@ -47,13 +45,13 @@ describe('ES Collections test', function(){
       callback = function () {}
     ;
     o.set(callback, generic);
-    assert("generic", o.get(callback) === generic);
+    assert(o.get(callback) === generic);
     o.set(callback, callback);
-    assert("callback", o.get(callback) === callback);
+    assert(o.get(callback) === callback);
     o.set(callback, o);
-    assert("o", o.get(callback) === o);
+    assert(o.get(callback) === o);
     o.set(o, callback);
-    assert("callback", o.get(o) === callback);
+    assert(o.get(o) === callback);
   });
 
   it("WeakMap#['delete']", function () {
@@ -65,14 +63,14 @@ describe('ES Collections test', function(){
     o.set(callback, generic);
     o.set(generic, callback);
     o.set(o, callback);
-    assert("has all of them", o.has(callback) && o.has(generic) && o.has(o));
+    assert(o.has(callback) && o.has(generic) && o.has(o));
     o["delete"](callback);
     o["delete"](generic);
     o["delete"](o);
-    assert("has none of them", !o.has(callback) && !o.has(generic) && !o.has(o));
-    assert("if not found, returns false", o["delete"](o) === false);
+    assert(!o.has(callback) && !o.has(generic) && !o.has(o));
+    assert(o["delete"](o) === false);
     o.set(o, callback);
-    assert("if found and removed returns true", o["delete"](o));
+    assert(o["delete"](o));
   });
 
   it("non object key throws an error", function () {
@@ -93,8 +91,8 @@ describe('ES Collections test', function(){
     assert(new Map instanceof Map);
     assert(Map() instanceof Map);
     if ("__proto__" in {}) {
-      assert("__proto__", Map().__proto__.isPrototypeOf(Map()));
-      assert("same prototype", Map().__proto__ === Map.prototype);
+      assert(Map().__proto__.isPrototypeOf(Map()));
+      assert(Map().__proto__ === Map.prototype);
     }
   });
 
@@ -103,11 +101,11 @@ describe('ES Collections test', function(){
       o = Map()
     ;
     if ("size" in o) {
-      assert("initial size is 0", o.size() === 0);
+      assert(o.size() === 0);
       o.set("a", "a");
-      assert("size reflects internal keys length", o.size() === 1);
+      assert(o.size() === 1);
       o["delete"]("a");
-      assert("after deleting size is 0 again", o.size() === 0);
+      assert(o.size() === 0);
     }
   });
 
@@ -117,9 +115,9 @@ describe('ES Collections test', function(){
       generic = {},
       callback = function () {}
     ;
-    assert("not there yet", false === o.has(callback));
+    assert(false === o.has(callback));
     o.set(callback, generic);
-    assert("now it has it", true === o.has(callback));
+    assert(true === o.has(callback));
   });
 
   it("Map#get", function () {
@@ -128,10 +126,10 @@ describe('ES Collections test', function(){
       generic = {},
       callback = function () {}
     ;
-    //:was assert("default", o.get(callback, 123) === 123);
+    //:was assert(o.get(callback, 123) === 123);
     o.set(callback, generic);
-    assert("generic with default", o.get(callback, 123) === generic);
-    assert("generic without default", o.get(callback) === generic);
+    assert(o.get(callback, 123) === generic);
+    assert(o.get(callback) === generic);
   });
 
   it("Map#set", function () {
@@ -141,26 +139,26 @@ describe('ES Collections test', function(){
       callback = function () {}
     ;
     o.set(callback, generic);
-    assert("generic", o.get(callback) === generic);
+    assert(o.get(callback) === generic);
     o.set(callback, callback);
-    assert("callback", o.get(callback) === callback);
+    assert(o.get(callback) === callback);
     o.set(callback, o);
-    assert("o", o.get(callback) === o);
+    assert(o.get(callback) === o);
     o.set(o, callback);
-    assert("callback", o.get(o) === callback);
+    assert(o.get(o) === callback);
     o.set(NaN, generic);
-    assert("NaN as valid key", o.has(NaN));
-    assert("NaN key returns expected value", o.get(NaN) === generic);
+    assert(o.has(NaN));
+    assert(o.get(NaN) === generic);
     o.set("key", undefined);
-    assert("undefined value is stored", o.has("key"));
-    assert("undefined value is retrieved", o.get("key") === undefined);
+    assert(o.has("key"));
+    assert(o.get("key") === undefined);
 
     o.set(-0, callback);
     o.set(0, generic);
-    assert("-0 as valid key", o.has(-0));
-    assert("-0 returns the expected value", o.get(-0) === callback);
-    assert("0 as valid key", o.has(0));
-    assert("0 returns the expected value", o.get(0) === generic);
+    assert(o.has(-0));
+    assert(o.get(-0) === callback);
+    assert(o.has(0));
+    assert(o.get(0) === generic);
   });
 
   it("Map#['delete']", function () {
@@ -172,14 +170,14 @@ describe('ES Collections test', function(){
     o.set(callback, generic);
     o.set(generic, callback);
     o.set(o, callback);
-    assert("has all of them", o.has(callback) && o.has(generic) && o.has(o));
+    assert(o.has(callback) && o.has(generic) && o.has(o));
     o["delete"](callback);
     o["delete"](generic);
     o["delete"](o);
-    assert("has none of them", !o.has(callback) && !o.has(generic) && !o.has(o));
-    assert("if not found, returns false", o["delete"](o) === false);
+    assert(!o.has(callback) && !o.has(generic) && !o.has(o));
+    assert(o["delete"](o) === false);
     o.set(o, callback);
-    assert("if found and removed returns true", o["delete"](o));
+    assert(o["delete"](o));
   });
 
   it("non object key does not throw an error", function () {
@@ -196,16 +194,16 @@ describe('ES Collections test', function(){
     var o = Map();
     o.set("key", "value");
     if ("keys" in o) {
-      assert("keys as array", o.keys() instanceof Array);
-      assert("only one key", o.keys().length === 1);
-      assert("key is correct", o.keys()[0] === "key");
-      assert("no slice", o.keys(1).join("") === o.keys().join(""));
+      assert(o.keys() instanceof Array);
+      assert(o.keys().length === 1);
+      assert(o.keys()[0] === "key");
+      assert(o.keys(1).join("") === o.keys().join(""));
     }
     if ("values" in o) {
-      assert("values as array", o.values() instanceof Array);
-      assert("only one value", o.values().length === 1);
-      assert("value is correct", o.values()[0] === "value");
-      assert("no slice", o.values(1).join("") === o.values().join(""));
+      assert(o.values() instanceof Array);
+      assert(o.values().length === 1);
+      assert(o.values()[0] === "value");
+      assert(o.values(1).join("") === o.values().join(""));
     }
   });
 
@@ -215,15 +213,15 @@ describe('ES Collections test', function(){
     o.set("key 1", "value 1");
     if ("iterate" in o) {
       o.iterate(function (key, value, index) {
-        assert("correct key", key === "key " + index);
-        assert("correct value", value === "value " + index);
-        assert("correct index", i == null ? index === 0 : index === 1);
+        assert(key === "key " + index);
+        assert(value === "value " + index);
+        assert(i == null ? index === 0 : index === 1);
         i = index;
         // even if dropped, keeps looping
         o["delete"](key);
       });
-      assert("looped twice", i === 1);
-      assert("o is empty", !o.keys().length);
+      assert(i === 1);
+      assert(!o.keys().length);
     }
   });
 
@@ -235,8 +233,8 @@ describe('ES Collections test', function(){
     assert(new Set instanceof Set);
     assert(Set() instanceof Set);
     if ("__proto__" in {}) {
-      assert("__proto__", Set().__proto__.isPrototypeOf(Set()));
-      assert("same prototype", Set().__proto__ === Set.prototype);
+      assert(Set().__proto__.isPrototypeOf(Set()));
+      assert(Set().__proto__ === Set.prototype);
     }
   });
 
@@ -245,18 +243,18 @@ describe('ES Collections test', function(){
       o = Set()
     ;
     if ("size" in o) {
-      assert("initial size is 0", o.size() === 0);
+      assert(o.size() === 0);
       o.add("a");
-      assert("size reflects internal values length", o.size() === 1);
+      assert(o.size() === 1);
       o["delete"]("a");
-      assert("after deleting size is 0 again", o.size() === 0);
+      assert(o.size() === 0);
     }
   });
 
   it("Set#add", function () {
     var o = Set();
-    assert("add returns undefined", o.add(NaN) === undefined);
-    // assert("once added, value is stored", o.has(NaN));
+    assert(o.add(NaN) === undefined);
+    assert(o.has(NaN));
   });
 
   it("Set#['delete']", function () {
@@ -268,24 +266,24 @@ describe('ES Collections test', function(){
     o.add(callback);
     o.add(generic);
     o.add(o);
-    assert("has all of them", o.has(callback) && o.has(generic) && o.has(o));
+    assert(o.has(callback) && o.has(generic) && o.has(o));
     o["delete"](callback);
     o["delete"](generic);
     o["delete"](o);
-    assert("has none of them", !o.has(callback) && !o.has(generic) && !o.has(o));
-    assert("if not found, returns false", o["delete"](o) === false);
+    assert(!o.has(callback) && !o.has(generic) && !o.has(o));
+    assert(o["delete"](o) === false);
     o.add(o);
-    assert("if found and removed returns true", o["delete"](o) === true);
+    assert(o["delete"](o) === true);
   });
 
   it("values behavior", function () {
     var o = Set();
     o.add("value");
     if ("values" in o) {
-      assert("values as array", o.values() instanceof Array);
-      assert("only one value", o.values().length === 1);
-      assert("value is correct", o.values()[0] === "value");
-      assert("no slice", o.values(1).join("") === o.values().join(""));
+      assert(o.values() instanceof Array);
+      assert(o.values().length === 1);
+      assert(o.values()[0] === "value");
+      assert(o.values(1).join("") === o.values().join(""));
     }
   });
 
@@ -295,9 +293,9 @@ describe('ES Collections test', function(){
       generic = {},
       callback = function () {}
     ;
-    assert("not there yet", false === o.has(callback));
+    assert(false === o.has(callback));
     o.add(callback);
-    assert("now it has it", true === o.has(callback));
+    assert(true === o.has(callback));
   });
 
   it("Set#iterate", function () {
@@ -306,14 +304,14 @@ describe('ES Collections test', function(){
     o.add("value 1");
     if ("iterate" in o) {
       o.iterate(function (value, index) {
-        assert("correct value", value === "value " + index);
-        assert("correct index", i == null ? index === 0 : index === 1);
+        assert(value === "value " + index);
+        assert(i == null ? index === 0 : index === 1);
         i = index;
         // even if dropped, keeps looping
         o["delete"](value);
       });
-      assert("looped twice", i === 1);
-      assert("o is empty", !o.values().length);
+      assert(i === 1);
+      assert(!o.values().length);
     }
   });
 });

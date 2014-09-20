@@ -5,7 +5,7 @@
       this._keys = [];
       this._values = [];
       this.objectOnly = true;
-    }
+    };
     WeakMap.prototype = {
       constructor: WeakMap,
       // WeakMap#delete(key:void*):boolean
@@ -15,7 +15,7 @@
       // WeakMap#get(key:void*):void*
       get: sharedGet,
       // WeakMap#has(key:void*):boolean
-      has: sharedHas,
+      has: mapHas,
       // WeakMap#set(key:void*, value:void*):void
       set: sharedSet
     };
@@ -27,14 +27,14 @@
       if (!this || this.constructor !== Map) return new Map;
       this._keys = [];
       this._values = [];
-    }
+    };
     Map.prototype = {
       constructor: Map,
       // WeakMap#delete(key:void*):boolean
       'delete': sharedDelete,
       //:was Map#get(key:void*[, d3fault:void*]):void*
       // Map#has(key:void*):boolean
-      has: sharedHas,
+      has: mapHas,
       // Map#get(key:void*):boolean
       get: sharedGet,
       // Map#set(key:void*, value:void*):void
@@ -56,13 +56,13 @@
       if (!this || this.constructor !== Set) return new Set;
       this._keys = []; //stub
       this._values = []; //real storage
-    }
+    };
     Set.prototype = {
       constructor: Set,
       // Set#has(value:void*):boolean
-      has: sharedHas,
+      has: setHas,
       // Set#add(value:void*):boolean
-      add: Set_add,
+      add: sharedSetAdd,
       // Set#delete(key:void*):boolean
       'delete': sharedDelete,
       // Set#clear():
@@ -72,7 +72,7 @@
       // Set#values(void):Array === not in specs
       values: sharedValues,
       // Set#forEach(callback:Function, context:void*):void ==> callback.call(context, value, index) === not in specs
-      forEach: Set_iterate
+      forEach: sharedSetIterate
     };
     exports.Set = Set;
   }
@@ -83,25 +83,24 @@
       this._keys = [];
       this._values = [];
       this.objectOnly = true;
-    }
-
+    };
     WeakSet.prototype = {
       constructor: WeakSet,
       // WeakSet#delete(key:void*):boolean
       'delete': sharedDelete,
       // WeakSet#add(value:void*):boolean
-      add: Set_add,
+      add: sharedSetAdd,
       // WeakSet#clear():
       clear: sharedClear,
       // WeakSet#has(value:void*):boolean
-      has: sharedHas
+      has: setHas
     };
     exports.WeakSet = WeakSet;
   }
 
-  //shortcuts
+  //shared pointer
   var i;
-
+  var is = Object.is;
 
   /** delete */
   function sharedDelete(key) {
@@ -117,12 +116,21 @@
     return this.has(key) ? this._values[i] : undefined;
   }
 
-  function sharedHas(key) {
+  function has(list, key) {
     if (this.objectOnly && key !== Object(key))
-      throw new TypeError("not a non-null object")
-    ;
-    i = this._keys.indexOf(key);
+      throw new TypeError("not a non-null object");
+    //NaN or 0 passed
+    if (key != key || key === 0) for (i = list.length; i-- && !is(list[i], key););
+    else i = list.indexOf(key);
     return -1 < i;
+  }
+
+  function setHas(value) {
+    return has.call(this, this._values, value);
+  }
+
+  function mapHas(value) {
+    return has.call(this, this._keys, value);
   }
 
   function sharedSet(key, value) {
@@ -146,8 +154,8 @@
     return this._keys.slice();
   }
 
-  function sharedSize(keys) {
-    return this._keys.length;
+  function sharedSize() {
+    return this._values.length;
   }
 
   function sharedIterate(callback, context) {
@@ -157,14 +165,14 @@
     });
   }
 
-  function Set_iterate(callback, context) {
+  function sharedSetIterate(callback, context) {
     self._values.forEach(function(value){
       callback.call(context, value);
     });
   }
 
   /** Set#add recycled through bind per each instanceof Set */
-  function Set_add(value) {
+  function sharedSetAdd(value) {
     !this.has(value) && !!this._values.push(value);
   }
 
