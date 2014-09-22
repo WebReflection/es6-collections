@@ -1,6 +1,6 @@
 var assert = require('better-assert');
-// require('../index');
-require('../es6-collections');
+require('../index');
+// require('../es6-collections');
 
 describe('ES Collections test', function(){
   it("WeakMap existence", function () {
@@ -10,6 +10,13 @@ describe('ES Collections test', function(){
   it("WeakMap constructor behavior", function () {
     assert(new WeakMap instanceof WeakMap);
     assert(WeakMap() instanceof WeakMap);
+    var a = {};
+    var b = {};
+    var c = WeakMap();
+    var m = new WeakMap([[a,1], [b,2], [c, 3]]);
+    assert(m.has(a));
+    assert(m.has(b));
+    assert(m.has(c));
     if ("__proto__" in {}) {
       assert(WeakMap().__proto__.isPrototypeOf(WeakMap()));
       assert(WeakMap().__proto__ === WeakMap.prototype);
@@ -91,6 +98,14 @@ describe('ES Collections test', function(){
   it("Map constructor behavior", function () {
     assert(new Map instanceof Map);
     assert(Map() instanceof Map);
+    var a = 1;
+    var b = {};
+    var c = Map();
+    var m = new Map([[1,1], [b,2], [c, 3]]);
+    assert(m.has(a));
+    assert(m.has(b));
+    assert(m.has(c));
+    assert(m.size(), 3);
     if ("__proto__" in {}) {
       assert(Map().__proto__.isPrototypeOf(Map()));
       assert(Map().__proto__ === Map.prototype);
@@ -240,6 +255,10 @@ describe('ES Collections test', function(){
   it("Set constructor behavior", function () {
     assert(new Set instanceof Set);
     assert(Set() instanceof Set);
+    var s = Set([1,2]);
+    assert(s.has(1));
+    assert(s.has(2));
+    assert(s.size(), 2);
     if ("__proto__" in {}) {
       assert(Set().__proto__.isPrototypeOf(Set()));
       assert(Set().__proto__ === Set.prototype);
@@ -329,5 +348,22 @@ describe('ES Collections test', function(){
     o.clear();
     assert(!o.size());
     assert(!o.values().length);
+  });
+
+
+  it("WeakSet existence", function () {
+    assert(WeakSet);
+  });
+
+  it("WeakSet constructor behavior", function () {
+    assert(new WeakSet instanceof WeakSet);
+    assert(WeakSet() instanceof WeakSet);
+    var a = {};
+    var s = WeakSet([a]);
+    assert(s.has(a));
+    if ("__proto__" in {}) {
+      assert(WeakSet().__proto__.isPrototypeOf(WeakSet()));
+      assert(WeakSet().__proto__ === WeakSet.prototype);
+    }
   });
 });

@@ -1,11 +1,6 @@
 (function (exports) {'use strict';
   if (typeof WeakMap == 'undefined') {
-    var WeakMap = function() {
-      if (!this || this.constructor !== WeakMap) return new WeakMap;
-      this._keys = [];
-      this._values = [];
-      this.objectOnly = true;
-    };
+    var WeakMap = createCollection(true);
     WeakMap.prototype = {
       constructor: WeakMap,
       // WeakMap#delete(key:void*):boolean
@@ -23,11 +18,7 @@
   }
 
   if (typeof Map == 'undefined') {
-    var Map = function() {
-      if (!this || this.constructor !== Map) return new Map;
-      this._keys = [];
-      this._values = [];
-    };
+    var Map = createCollection();
     Map.prototype = {
       constructor: Map,
       // WeakMap#delete(key:void*):boolean
@@ -54,11 +45,7 @@
   }
 
   if (typeof Set == 'undefined') {
-    var Set = function() {
-      if (!this || this.constructor !== Set) return new Set;
-      this._keys = []; //stub
-      this._values = []; //real storage
-    };
+    var Set =createCollection();
     Set.prototype = {
       constructor: Set,
       // Set#has(value:void*):boolean
@@ -80,12 +67,7 @@
   }
 
   if (typeof WeakSet == 'undefined') {
-    var WeakSet = function() {
-      if (!this || this.constructor !== WeakSet) return new WeakSet;
-      this._keys = [];
-      this._values = [];
-      this.objectOnly = true;
-    };
+    var WeakSet = createCollection(true);
     WeakSet.prototype = {
       constructor: WeakSet,
       // WeakSet#delete(key:void*):boolean
@@ -100,9 +82,39 @@
     exports.WeakSet = WeakSet;
   }
 
+
+  /**
+   * ES6 collection constructor
+   * @return {Function} a collection constructor
+   */
+  function createCollection(objectOnly){
+    return function Collection(a){
+      if (!this || this.constructor !== Collection) return new Collection(a);
+      this._keys = [];
+      this._values = [];
+      this.objectOnly = objectOnly;
+
+      //parse initial iterable argument passed
+      if (a) init.call(this, a);
+    };
+  }
+
+
   //shared pointer
   var i;
   var is = Object.is;
+
+
+  /** parse initial iterable argument passed */
+  function init(a){
+    //init Set argument, like `[1,2,3,{}]`
+    if (this.add)
+      for (var i = a.length; i--; this.add(a[i]));
+    //init Map argument like `[[1,2], [{}, 4]]`
+    else
+      for (var i = a.length; i--; this.set(a[i][0], a[i][1]));
+  }
+
 
   /** delete */
   function sharedDelete(key) {
