@@ -85,7 +85,7 @@
 
   /**
    * ES6 collection constructor
-   * @return {Function} a collection constructor
+   * @return {Function} a collection class
    */
   function createCollection(objectOnly){
     return function Collection(a){
@@ -132,7 +132,7 @@
 
   function has(list, key) {
     if (this.objectOnly && key !== Object(key))
-      throw new TypeError("not a non-null object");
+      throw new TypeError("Invalid value used as weak collection key");
     //NaN or 0 passed
     if (key != key || key === 0) for (i = list.length; i-- && !is(list[i], key););
     else i = list.indexOf(key);
