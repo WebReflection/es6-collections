@@ -48,7 +48,7 @@
       // Map#forEach(callback:Function, context:void*):void ==> callback.call(context, key, value, mapObject) === not in specs`
       forEach: sharedForEach,
       // Map#clear():
-      clear: sharedClear,
+      clear: sharedClear
     };
     exports.Map = Map;
   }

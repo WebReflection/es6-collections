@@ -38,7 +38,7 @@
   "optionalDependencies": {},
   "scripts": {
     "build": "npm run minify && npm run test",
-    "minify": "ccjs index.js > es6-collections.js",
+    "minify": "ccjs index.js > es6-collections.min.js",
     "test": "mocha"
   },
   "testling": {
