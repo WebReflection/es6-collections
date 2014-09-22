@@ -1,6 +1,6 @@
 var assert = require('better-assert');
-// require('../index');
-require('../es6-collections.min');
+require('../index');
+// require('../es6-collections.min');
 
 describe('ES Collections test', function(){
   it("WeakMap existence", function () {
@@ -208,22 +208,29 @@ describe('ES Collections test', function(){
     }
   });
 
-  it("Map#iterate", function () {
+  it("Map#forEach", function () {
     var o = Map(), i;
-    o.set("key 0", "value 0");
-    o.set("key 1", "value 1");
-    if ("iterate" in o) {
-      o.iterate(function (key, value, index) {
-        assert(key === "key " + index);
-        assert(value === "value " + index);
-        assert(i == null ? index === 0 : index === 1);
-        i = index;
+    o.set("key 0", 0);
+    o.set("key 1", 1);
+    if ("forEach" in o) {
+      o.forEach(function (key, value, obj) {
+        assert(key === "key " + value);
+        assert(obj === o);
         // even if dropped, keeps looping
         o["delete"](key);
       });
-      assert(i === 1);
       assert(!o.keys().length);
     }
+  });
+
+  it("Map#clear", function(){
+    var o = Map();
+    o.set(1, '1');
+    o.set(2, '2');
+    o.set(3, '3');
+    o.clear();
+    assert(!o.size());
+    assert(!o.values().length);
   });
 
   it("Set existence", function () {
@@ -299,20 +306,28 @@ describe('ES Collections test', function(){
     assert(true === o.has(callback));
   });
 
-  it("Set#iterate", function () {
-    var o = Set(), i;
+  it("Set#forEach", function () {
+    var o = Set(), i = 0;
     o.add("value 0");
     o.add("value 1");
-    if ("iterate" in o) {
-      o.iterate(function (value, index) {
-        assert(value === "value " + index);
-        assert(i == null ? index === 0 : index === 1);
-        i = index;
+    if ("forEach" in o) {
+      o.forEach(function (value, sameValue, obj) {
+        assert(value === "value " + i++);
+        assert(obj === o);
+        assert(value === sameValue);
         // even if dropped, keeps looping
         o["delete"](value);
       });
-      assert(i === 1);
       assert(!o.values().length);
     }
+  });
+
+  it("Set#clear", function(){
+    var o = Set();
+    o.add(1);
+    o.add(2);
+    o.clear();
+    assert(!o.size());
+    assert(!o.values().length);
   });
 });

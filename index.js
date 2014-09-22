@@ -10,7 +10,7 @@
       constructor: WeakMap,
       // WeakMap#delete(key:void*):boolean
       'delete': sharedDelete,
-      // Set#clear():
+      // WeakMap#clear():
       clear: sharedClear,
       // WeakMap#get(key:void*):void*
       get: sharedGet,
@@ -45,8 +45,10 @@
       keys: sharedKeys,
       // Map#values(void):Array === not in specs
       values: sharedValues,
-      // Map#forEach(callback:Function, context:void*):void ==> callback.call(context, key, value, index) === not in specs`
-      forEach: sharedIterate
+      // Map#forEach(callback:Function, context:void*):void ==> callback.call(context, key, value, mapObject) === not in specs`
+      forEach: sharedForEach,
+      // Map#clear():
+      clear: sharedClear,
     };
     exports.Map = Map;
   }
@@ -158,16 +160,18 @@
     return this._values.length;
   }
 
-  function sharedIterate(callback, context) {
+  function sharedForEach(callback, context) {
     var self = this;
-    self._keys.forEach(function(key, n){
-      callback.call(context, key, self._values[n]);
+    var values = self._values.slice();
+    self._keys.slice().forEach(function(key, n){
+      callback.call(context, key, values[n], self);
     });
   }
 
   function sharedSetIterate(callback, context) {
-    this._values.forEach(function(value){
-      callback.call(context, value);
+    var self = this;
+    self._values.slice().forEach(function(value){
+      callback.call(context, value, value, self);
     });
   }
 
