@@ -1,6 +1,10 @@
-[![build status](https://secure.travis-ci.org/WebReflection/es6-collections.png)](http://travis-ci.org/WebReflection/es6-collections)
-ES6 Harmony Collections Fast Polyfill
+ES6 Harmony Collections [![build status](https://secure.travis-ci.org/WebReflection/es6-collections.png)](http://travis-ci.org/WebReflection/es6-collections)
 ===========================================
+
+
+[![browser support](https://ci.testling.com/dfcreative/es6-collections.png)
+](https://ci.testling.com/dfcreative/es6-collections)
+
 
 The aim of this repository is to provide an **unobtrusive, performances oriented** shim for ES6 collections such **WeakMap**, **Map**, and **Set**.
 
@@ -11,11 +15,18 @@ Features
 --------
   * compatible with **all browsers** and both **node.js** (`npm install es6-collections`) and **Rhino**
   * **100% unobtrusive** with any environment. If implemented in node V8 it exports native constructors rather than shims
-  * **size and performances oriented** polyfill. It does not matter if the WeakMap is not perfect, it's just fast and not much more memory leaks prone than other shims. If you don't rely in magic, simply remember to `wm.delete(referedObject)` when *referedObject* is not needed anymore.
-  * for browsers, it fits in **less than 1Kb** [once minzipped](https://github.com/WebReflection/es6-collections/blob/master/build/es6-collections.min.js) ... the smallest shim out there so far
-  * 100% of code coverage through [Web](https://github.com/WebReflection/es6-collections/blob/master/tests/web.html) or [console](https://github.com/WebReflection/es6-collections/blob/master/tests/console.js) [wru](https://github.com/WebReflection/wru) based [tests](https://github.com/WebReflection/es6-collections/blob/master/tests/es6-collections.js)
+  * **size and performances oriented** polyfill. It does not matter if the WeakMap is not perfect, it's just fast and not much more memory leaks prone than other shims. If you don't rely on magic, simply remember to `weakmap.delete(referedObject)` when *referedObject* is not needed anymore.
+  * for browsers, it fits in **less than 1Kb** [once minzipped](https://github.com/WebReflection/es6-collections/blob/master/es6-collections.min.js) ... the smallest shim out there so far
+  * 100% of code coverage
   * completely private shared behavior in order to easily maintain and update three collections at once
 
+
+New On Version 0.3.0
+--------------------
+  * API updated to the [MDN docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
+  * tests are replaced with mocha and testling, which gets testling table and better testing possibilities
+  * polyfills for old browsers moved out to autopolyfiller
+  * used prototypical shared methods approach since it demonstrates times better results - [test on jsperf](http://jsperf.com/object-create-method-vs-prototype-method)
 
 New On Version 0.2.0
 --------------------
@@ -47,14 +58,12 @@ Alternatives
 
 Tests
 -----
-To run tests via **node.js** from the root folder of this project simply write `node tests/console.js`.
-To run tests via **Rhino** from the root folder of this project simply write `java -jar builder/jar/js.jar tests/console.js`.
-To run test via **browser** simply drag and drop **tests/web.html** file.
+Just type `$ mocha` or `$ npm test` from the project’s folder in terminal.
 
 
 Build
 -----
-To build the browser version from the root of this project folder simply write `python builder/build.py`.
+`$ npm build` to build browser version of bundle.
 
 
 License
@@ -63,17 +72,17 @@ License
 *es6-collections* and the rest of the project is under Mit Style License
 
     Copyright (C) 2011 by Andrea Giammarchi, @WebReflection
-    
+
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
     in the Software without restriction, including without limitation the rights
     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
     copies of the Software, and to permit persons to whom the Software is
     furnished to do so, subject to the following conditions:
-    
+
     The above copyright notice and this permission notice shall be included in
     all copies or substantial portions of the Software.
-    
+
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
