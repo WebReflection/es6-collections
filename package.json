@@ -1,6 +1,6 @@
 {
   "name": "es6-collections",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "ES6 Harmony like collections such Map, WeakMap, and Set",
   "homepage": "https://github.com/WebReflection/es6-collections",
   "keywords": [
