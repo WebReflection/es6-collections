@@ -166,7 +166,7 @@
   }
 
   function sharedSetIterate(callback, context) {
-    self._values.forEach(function(value){
+    this._values.forEach(function(value){
       callback.call(context, value);
     });
   }
