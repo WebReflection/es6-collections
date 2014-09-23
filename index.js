@@ -48,7 +48,7 @@
       // Set#has(value:void*):boolean
       has: setHas,
       // Set#add(value:void*):boolean
-      add: sharedSetAdd,
+      add: sharedAdd,
       // Set#delete(key:void*):boolean
       'delete': sharedDelete,
       // Set#clear():
@@ -65,7 +65,7 @@
       // WeakSet#delete(key:void*):boolean
       'delete': sharedDelete,
       // WeakSet#add(value:void*):boolean
-      add: sharedSetAdd,
+      add: sharedAdd,
       // WeakSet#clear():
       clear: sharedClear,
       // WeakSet#has(value:void*):boolean
@@ -106,12 +106,13 @@
 
   /** parse initial iterable argument passed */
   function init(a){
+    var i;
     //init Set argument, like `[1,2,3,{}]`
     if (this.add)
-      for (var i = a.length; i--; this.add(a[i]));
+      for (i = a.length; i--; ) {this.add(a[i]);}
     //init Map argument like `[[1,2], [{}, 4]]`
     else
-      for (var i = a.length; i--; this.set(a[i][0], a[i][1]));
+      for (i = a.length; i--; ) {this.set(a[i][0], a[i][1]);}
   }
 
 
@@ -146,12 +147,20 @@
     return has.call(this, this._keys, value);
   }
 
+  /** @chainable */
   function sharedSet(key, value) {
     this.has(key) ?
       this._values[i] = value
       :
       this._values[this._keys.push(key) - 1] = value
     ;
+    return this;
+  }
+
+  /** @chainable */
+  function sharedAdd(value) {
+    if (!this.has(value)) this._values.push(value);
+    return this;
   }
 
   function sharedClear() {
@@ -184,11 +193,6 @@
     self._values.slice().forEach(function(value){
       callback.call(context, value, value, self);
     });
-  }
-
-  /** Set#add recycled through bind per each instanceof Set */
-  function sharedSetAdd(value) {
-    !this.has(value) && !!this._values.push(value);
   }
 
 })(typeof exports == 'undefined' ? window : global);

@@ -1,6 +1,6 @@
 var assert = require('better-assert');
-require('../index');
-// require('../es6-collections');
+// require('../index');
+require('../es6-collections');
 
 describe('ES Collections test', function(){
   it("WeakMap existence", function () {
@@ -280,7 +280,7 @@ describe('ES Collections test', function(){
 
   it("Set#add", function () {
     var o = Set();
-    assert(o.add(NaN) === undefined);
+    assert(o.add(NaN));
     assert(o.has(NaN));
   });
 
@@ -365,5 +365,25 @@ describe('ES Collections test', function(){
       assert(WeakSet().__proto__.isPrototypeOf(WeakSet()));
       assert(WeakSet().__proto__ === WeakSet.prototype);
     }
+  });
+
+  it("Set#add, WeakSet#add, Map#set and WeakMap#set are chainable now", function(){
+    var s = Set();
+    var ws = WeakSet();
+    var m = Map();
+    var wm = WeakMap();
+    var a = {}, b = {};
+
+    s.add(1).add(2);
+    assert(s.has(1) && s.has(2) && s.size === 2);
+
+    ws.add(a).add(b);
+    assert(ws.has(a) && ws.has(b));
+
+    m.set(1, 1).set(a, 2);
+    assert(m.has(1) && m.has(a) && m.size === 2);
+
+    wm.set(a, b).set(b, a);
+    assert(wm.get(a) === b && wm.get(b) === a);
   });
 });
