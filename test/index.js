@@ -1,6 +1,6 @@
 var assert = require('better-assert');
-// require('../index');
-require('../es6-collections');
+require('../index');
+// require('../es6-collections');
 
 describe('ES Collections test', function(){
   it("WeakMap existence", function () {
@@ -105,7 +105,7 @@ describe('ES Collections test', function(){
     assert(m.has(a));
     assert(m.has(b));
     assert(m.has(c));
-    assert(m.size(), 3);
+    assert(m.size, 3);
     if ("__proto__" in {}) {
       assert(Map().__proto__.isPrototypeOf(Map()));
       assert(Map().__proto__ === Map.prototype);
@@ -117,11 +117,11 @@ describe('ES Collections test', function(){
       o = Map()
     ;
     if ("size" in o) {
-      assert(o.size() === 0);
+      assert(o.size === 0);
       o.set("a", "a");
-      assert(o.size() === 1);
+      assert(o.size === 1);
       o["delete"]("a");
-      assert(o.size() === 0);
+      assert(o.size === 0);
     }
   });
 
@@ -244,7 +244,7 @@ describe('ES Collections test', function(){
     o.set(2, '2');
     o.set(3, '3');
     o.clear();
-    assert(!o.size());
+    assert(!o.size);
     assert(!o.values().length);
   });
 
@@ -258,7 +258,7 @@ describe('ES Collections test', function(){
     var s = Set([1,2]);
     assert(s.has(1));
     assert(s.has(2));
-    assert(s.size(), 2);
+    assert(s.size, 2);
     if ("__proto__" in {}) {
       assert(Set().__proto__.isPrototypeOf(Set()));
       assert(Set().__proto__ === Set.prototype);
@@ -270,11 +270,11 @@ describe('ES Collections test', function(){
       o = Set()
     ;
     if ("size" in o) {
-      assert(o.size() === 0);
+      assert(o.size === 0);
       o.add("a");
-      assert(o.size() === 1);
+      assert(o.size === 1);
       o["delete"]("a");
-      assert(o.size() === 0);
+      assert(o.size === 0);
     }
   });
 
@@ -346,7 +346,7 @@ describe('ES Collections test', function(){
     o.add(1);
     o.add(2);
     o.clear();
-    assert(!o.size());
+    assert(!o.size);
     assert(!o.values().length);
   });
 

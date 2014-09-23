@@ -1,8 +1,13 @@
 (function (exports) {'use strict';
+  //shared pointer
+  var i;
+  //shortcuts
+  var defineProperty = Object.defineProperty, is = Object.is;
+
+
+  //Polyfill global objects
   if (typeof WeakMap == 'undefined') {
-    var WeakMap = createCollection(true);
-    WeakMap.prototype = {
-      constructor: WeakMap,
+    exports.WeakMap = createCollection({
       // WeakMap#delete(key:void*):boolean
       'delete': sharedDelete,
       // WeakMap#clear():
@@ -13,14 +18,11 @@
       has: mapHas,
       // WeakMap#set(key:void*, value:void*):void
       set: sharedSet
-    };
-    exports.WeakMap = WeakMap;
+    }, true);
   }
 
   if (typeof Map == 'undefined') {
-    var Map = createCollection();
-    Map.prototype = {
-      constructor: Map,
+    exports.Map = createCollection({
       // WeakMap#delete(key:void*):boolean
       'delete': sharedDelete,
       //:was Map#get(key:void*[, d3fault:void*]):void*
@@ -30,8 +32,6 @@
       get: sharedGet,
       // Map#set(key:void*, value:void*):void
       set: sharedSet,
-      // Map#size(void):number === Mozilla only so far
-      size: sharedSize,
       // Map#keys(void):Array === not in specs
       keys: sharedKeys,
       // Map#values(void):Array === not in specs
@@ -40,14 +40,11 @@
       forEach: sharedForEach,
       // Map#clear():
       clear: sharedClear
-    };
-    exports.Map = Map;
+    });
   }
 
   if (typeof Set == 'undefined') {
-    var Set =createCollection();
-    Set.prototype = {
-      constructor: Set,
+    exports.Set = createCollection({
       // Set#has(value:void*):boolean
       has: setHas,
       // Set#add(value:void*):boolean
@@ -56,20 +53,15 @@
       'delete': sharedDelete,
       // Set#clear():
       clear: sharedClear,
-      // Set#size(void):number === Mozilla only
-      size: sharedSize,
       // Set#values(void):Array === not in specs
       values: sharedValues,
       // Set#forEach(callback:Function, context:void*):void ==> callback.call(context, value, index) === not in specs
       forEach: sharedSetIterate
-    };
-    exports.Set = Set;
+    });
   }
 
   if (typeof WeakSet == 'undefined') {
-    var WeakSet = createCollection(true);
-    WeakSet.prototype = {
-      constructor: WeakSet,
+    exports.WeakSet = createCollection({
       // WeakSet#delete(key:void*):boolean
       'delete': sharedDelete,
       // WeakSet#add(value:void*):boolean
@@ -78,8 +70,7 @@
       clear: sharedClear,
       // WeakSet#has(value:void*):boolean
       has: setHas
-    };
-    exports.WeakSet = WeakSet;
+    }, true);
   }
 
 
@@ -87,8 +78,8 @@
    * ES6 collection constructor
    * @return {Function} a collection class
    */
-  function createCollection(objectOnly){
-    return function Collection(a){
+  function createCollection(proto, objectOnly){
+    function Collection(a){
       if (!this || this.constructor !== Collection) return new Collection(a);
       this._keys = [];
       this._values = [];
@@ -96,13 +87,21 @@
 
       //parse initial iterable argument passed
       if (a) init.call(this, a);
-    };
+    }
+
+    //define size for non-object only collections
+    if (!objectOnly) {
+      defineProperty(proto, 'size', {
+        get: sharedSize
+      });
+    }
+
+    //set prototype
+    proto.constructor = Collection;
+    Collection.prototype = proto;
+
+    return Collection;
   }
-
-
-  //shared pointer
-  var i;
-  var is = Object.is;
 
 
   /** parse initial iterable argument passed */
