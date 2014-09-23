@@ -358,9 +358,9 @@ describe('ES Collections test', function(){
   it("WeakSet constructor behavior", function () {
     assert(new WeakSet instanceof WeakSet);
     assert(WeakSet() instanceof WeakSet);
-    var a = {};
-    var s = WeakSet([a]);
-    assert(s.has(a));
+    var a = {}, b = {};
+    var s = WeakSet([a, b]);
+    assert(s.has(a) && s.has(b));
     if ("__proto__" in {}) {
       assert(WeakSet().__proto__.isPrototypeOf(WeakSet()));
       assert(WeakSet().__proto__ === WeakSet.prototype);
@@ -385,5 +385,10 @@ describe('ES Collections test', function(){
 
     wm.set(a, b).set(b, a);
     assert(wm.get(a) === b && wm.get(b) === a);
+  });
+
+  it("Recognize any iterable as the constructor input", function(){
+    var a = new Set(new Set([1,2]));
+    assert(a.has(1));
   });
 });

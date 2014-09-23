@@ -89,7 +89,7 @@
       if (a) init.call(this, a);
     }
 
-    //define size for non-object only collections
+    //define size for non object-only collections
     if (!objectOnly) {
       defineProperty(proto, 'size', {
         get: sharedSize
@@ -109,10 +109,10 @@
     var i;
     //init Set argument, like `[1,2,3,{}]`
     if (this.add)
-      for (i = a.length; i--; ) {this.add(a[i]);}
+      a.forEach(this.add, this);
     //init Map argument like `[[1,2], [{}, 4]]`
     else
-      for (i = a.length; i--; ) {this.set(a[i][0], a[i][1]);}
+      a.forEach(function(a){this.set(a[0],a[1])}, this);
   }
 
 
