@@ -195,4 +195,4 @@
     });
   }
 
-})(typeof exports == 'undefined' ? window : global);
+})(typeof exports != 'undefined' && typeof global != 'undefined' ? global : window );
