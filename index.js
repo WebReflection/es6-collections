@@ -184,7 +184,7 @@
     var self = this;
     var values = self._values.slice();
     self._keys.slice().forEach(function(key, n){
-      callback.call(context, key, values[n], self);
+      callback.call(context, values[n], key, self);
     });
   }
 
