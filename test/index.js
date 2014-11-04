@@ -228,7 +228,7 @@ describe('ES Collections test', function(){
     o.set("key 0", 0);
     o.set("key 1", 1);
     if ("forEach" in o) {
-      o.forEach(function (key, value, obj) {
+      o.forEach(function (value, key, obj) {
         assert(key === "key " + value);
         assert(obj === o);
         // even if dropped, keeps looping
