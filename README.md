@@ -16,7 +16,7 @@ Features
   * compatible with **all browsers** and both **node.js** (`npm install es6-collections`) and **Rhino**
   * **100% unobtrusive** with any environment. If implemented in node V8 it exports native constructors rather than shims
   * **size and performances oriented** polyfill. It does not matter if the WeakMap is not perfect, it's just fast and not much more memory leaks prone than other shims. If you don't rely on magic, simply remember to `weakmap.delete(referedObject)` when *referedObject* is not needed anymore.
-  * for browsers, it fits in **less than 1Kb** [once minzipped](https://github.com/WebReflection/es6-collections/blob/master/es6-collections.min.js) ... the smallest shim out there so far
+  * for browsers, it fits in **less than 1Kb** [once minzipped](https://github.com/WebReflection/es6-collections/blob/master/es6-collections.js) ... the smallest shim out there so far
   * 100% of code coverage
   * completely private shared behavior in order to easily maintain and update three collections at once
 
