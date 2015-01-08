@@ -1,6 +1,6 @@
 {
   "name": "es6-collections",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "ES6 Harmony like collections such Map, WeakMap, and Set",
   "homepage": "https://github.com/WebReflection/es6-collections",
   "keywords": [
@@ -38,8 +38,8 @@
   "optionalDependencies": {},
   "scripts": {
     "build": "npm run minify && npm run test",
-    "minify": "ccjs index.js > es6-collections.js",
-    "test": "mocha"
+    "minify": "./node_modules/closurecompiler/bin/ccjs index.js > es6-collections.js",
+    "test": "./node_modules/mocha/bin/mocha"
   },
   "testling": {
     "files": "test/*.js",
