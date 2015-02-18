@@ -169,11 +169,17 @@ describe('ES Collections test', function(){
     assert(o.has("key"));
     assert(o.get("key") === undefined);
 
+    assert(!o.has(-0));
+    assert(!o.has(0));
     o.set(-0, callback);
+    assert(o.has(-0));
+    assert(o.has(0));
+    assert(o.get(-0) === callback);
+    assert(o.get(0) === callback);
     o.set(0, generic);
     assert(o.has(-0));
-    assert(o.get(-0) === callback);
     assert(o.has(0));
+    assert(o.get(-0) === generic);
     assert(o.get(0) === generic);
   });
 
