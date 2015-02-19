@@ -169,11 +169,20 @@
 
   /** keys, values, and iterate related methods */
   function sharedValues() {
-    return this._values.slice();
+    return sharedIterator(this._values);
   }
 
   function sharedKeys() {
-    return this._keys.slice();
+    return sharedIterator(this._keys);
+  }
+
+  function sharedIterator(array) {
+    var i = 0, done = false;
+    return {
+      next: function() {
+        return (!done && i < array.length)? { done: false, value: array[i++]}: { done: (done = true) };
+      }
+    };
   }
 
   function sharedSize() {

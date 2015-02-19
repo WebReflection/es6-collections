@@ -213,20 +213,34 @@ describe('ES Collections test', function(){
   });
 
   it("keys and values behavior", function () {
-    var o = Map();
-    o.set("key", "value");
-    if ("keys" in o) {
-      assert(o.keys() instanceof Array);
-      assert(o.keys().length === 1);
-      assert(o.keys()[0] === "key");
-      assert(o.keys(1).join("") === o.keys().join(""));
-    }
-    if ("values" in o) {
-      assert(o.values() instanceof Array);
-      assert(o.values().length === 1);
-      assert(o.values()[0] === "value");
-      assert(o.values(1).join("") === o.values().join(""));
-    }
+    // test that things get returned in insertion order as per the specs
+    var o = new Map([["1", 1], ["2", 2], ["3", 3]]);
+    var keys = o.keys(), values = o.values();
+    var k = keys.next(), v = values.next();
+    assert(k.value === "1" && v.value === 1);
+    o.delete("2");
+    k = keys.next(), v = values.next();
+    assert(k.value === "3" && v.value === 3);
+    // insertion of previously-removed item goes to the end
+    o.set("2", 2);
+    k = keys.next(), v = values.next();
+    assert(k.value === "2" && v.value === 2);
+    // when called again, new iterator starts from beginning
+    var keysagain = o.keys();
+    assert(keysagain.next().value === "1");
+    assert(keysagain.next().value === "3");
+    assert(keysagain.next().value === "2");
+    // after a iterator is finished, don't return any more elements
+    k = keys.next(), v = values.next();
+    assert(k.done && v.done);
+    k = keys.next(), v = values.next();
+    assert(k.done && v.done);
+    o.set("4", 4);
+    k = keys.next(), v = values.next();
+    assert(k.done && v.done);
+    // new element shows up in iterators that didn't yet finish
+    assert(keysagain.next().value === "4");
+    assert(keysagain.next().done);
   });
 
   it("Map#forEach", function () {
@@ -240,7 +254,7 @@ describe('ES Collections test', function(){
         // even if dropped, keeps looping
         o["delete"](key);
       });
-      assert(!o.keys().length);
+      assert(!o.size);
     }
   });
 
@@ -251,7 +265,6 @@ describe('ES Collections test', function(){
     o.set(3, '3');
     o.clear();
     assert(!o.size);
-    assert(!o.values().length);
   });
 
   it("Set existence", function () {
@@ -310,14 +323,34 @@ describe('ES Collections test', function(){
   });
 
   it("values behavior", function () {
-    var o = Set();
-    o.add("value");
-    if ("values" in o) {
-      assert(o.values() instanceof Array);
-      assert(o.values().length === 1);
-      assert(o.values()[0] === "value");
-      assert(o.values(1).join("") === o.values().join(""));
-    }
+    // test that things get returned in insertion order as per the specs
+    var o = new Set([1, 2, 3]);
+    var values = o.values();
+    var v = values.next();
+    assert(v.value === 1);
+    o.delete(2);
+    v = values.next();
+    assert(v.value === 3);
+    // insertion of previously-removed item goes to the end
+    o.add(2);
+    v = values.next();
+    assert(v.value === 2);
+    // when called again, new iterator starts from beginning
+    var valuesagain = o.values();
+    assert(valuesagain.next().value === 1);
+    assert(valuesagain.next().value === 3);
+    assert(valuesagain.next().value === 2);
+    // after a iterator is finished, don't return any more elements
+    v = values.next();
+    assert(v.done);
+    v = values.next();
+    assert(v.done);
+    o.add(4);
+    v = values.next();
+    assert(v.done);
+    // new element shows up in iterators that didn't yet finish
+    assert(valuesagain.next().value === 4);
+    assert(valuesagain.next().done);
   });
 
   it("Set#has", function () {
@@ -343,7 +376,7 @@ describe('ES Collections test', function(){
         // even if dropped, keeps looping
         o["delete"](value);
       });
-      assert(!o.values().length);
+      assert(!o.size);
     }
   });
 
@@ -353,7 +386,6 @@ describe('ES Collections test', function(){
     o.add(2);
     o.clear();
     assert(!o.size);
-    assert(!o.values().length);
   });
 
 
