@@ -212,7 +212,7 @@ describe('ES Collections test', function(){
     }
   });
 
-  it("keys and values behavior", function () {
+  it("keys, values, entries behavior", function () {
     // test that things get returned in insertion order as per the specs
     var o = new Map([["1", 1], ["2", 2], ["3", 3]]);
     var keys = o.keys(), values = o.values();
@@ -226,10 +226,10 @@ describe('ES Collections test', function(){
     k = keys.next(), v = values.next();
     assert(k.value === "2" && v.value === 2);
     // when called again, new iterator starts from beginning
-    var keysagain = o.keys();
-    assert(keysagain.next().value === "1");
-    assert(keysagain.next().value === "3");
-    assert(keysagain.next().value === "2");
+    var entriesagain = o.entries();
+    assert(entriesagain.next().value[0] === "1");
+    assert(entriesagain.next().value[0] === "3");
+    assert(entriesagain.next().value[0] === "2");
     // after a iterator is finished, don't return any more elements
     k = keys.next(), v = values.next();
     assert(k.done && v.done);
@@ -239,8 +239,8 @@ describe('ES Collections test', function(){
     k = keys.next(), v = values.next();
     assert(k.done && v.done);
     // new element shows up in iterators that didn't yet finish
-    assert(keysagain.next().value === "4");
-    assert(keysagain.next().done);
+    assert(entriesagain.next().value[0] === "4");
+    assert(entriesagain.next().done);
   });
 
   it("Map#forEach", function () {
@@ -325,6 +325,7 @@ describe('ES Collections test', function(){
   it("values behavior", function () {
     // test that things get returned in insertion order as per the specs
     var o = new Set([1, 2, 3]);
+    assert(o.keys === o.values); // same function, as per the specs
     var values = o.values();
     var v = values.next();
     assert(v.value === 1);
@@ -336,10 +337,10 @@ describe('ES Collections test', function(){
     v = values.next();
     assert(v.value === 2);
     // when called again, new iterator starts from beginning
-    var valuesagain = o.values();
-    assert(valuesagain.next().value === 1);
-    assert(valuesagain.next().value === 3);
-    assert(valuesagain.next().value === 2);
+    var entriesagain = o.entries();
+    assert(entriesagain.next().value[1] === 1);
+    assert(entriesagain.next().value[1] === 3);
+    assert(entriesagain.next().value[1] === 2);
     // after a iterator is finished, don't return any more elements
     v = values.next();
     assert(v.done);
@@ -349,8 +350,8 @@ describe('ES Collections test', function(){
     v = values.next();
     assert(v.done);
     // new element shows up in iterators that didn't yet finish
-    assert(valuesagain.next().value === 4);
-    assert(valuesagain.next().done);
+    assert(entriesagain.next().value[1] === 4);
+    assert(entriesagain.next().done);
   });
 
   it("Set#has", function () {
