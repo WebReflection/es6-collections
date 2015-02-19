@@ -140,7 +140,7 @@
     if (this.objectOnly && key !== Object(key))
       throw new TypeError("Invalid value used as weak collection key");
     //NaN or 0 passed
-    if (key != key || key === 0) for (i = list.length; i-- && !is(list[i], key););
+    if (key != key || key === 0) for (i = list.length; i-- && !is(list[i], key);){}
     else i = list.indexOf(key);
     return -1 < i;
   }

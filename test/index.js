@@ -9,23 +9,23 @@ describe('ES Collections test', function(){
 
   it("WeakMap constructor behavior", function () {
     assert(new WeakMap instanceof WeakMap);
-    assert(WeakMap() instanceof WeakMap);
+    assert(new WeakMap() instanceof WeakMap);
     var a = {};
     var b = {};
-    var c = WeakMap();
+    var c = new WeakMap();
     var m = new WeakMap([[a,1], [b,2], [c, 3]]);
     assert(m.has(a));
     assert(m.has(b));
     assert(m.has(c));
     if ("__proto__" in {}) {
-      assert(WeakMap().__proto__.isPrototypeOf(WeakMap()));
-      assert(WeakMap().__proto__ === WeakMap.prototype);
+      assert((new WeakMap).__proto__.isPrototypeOf(new WeakMap()));
+      assert((new WeakMap).__proto__ === WeakMap.prototype);
     }
   });
 
   it("WeakMap#has", function () {
     var
-      o = WeakMap(),
+      o = new WeakMap(),
       generic = {},
       callback = function () {}
     ;
@@ -36,7 +36,7 @@ describe('ES Collections test', function(){
 
   it("WeakMap#get", function () {
     var
-      o = WeakMap(),
+      o = new WeakMap(),
       generic = {},
       callback = function () {}
     ;
@@ -48,7 +48,7 @@ describe('ES Collections test', function(){
 
   it("WeakMap#set", function () {
     var
-      o = WeakMap(),
+      o = new WeakMap(),
       generic = {},
       callback = function () {}
     ;
@@ -64,7 +64,7 @@ describe('ES Collections test', function(){
 
   it("WeakMap#['delete']", function () {
     var
-      o = WeakMap(),
+      o = new WeakMap(),
       generic = {},
       callback = function () {}
     ;
@@ -82,7 +82,7 @@ describe('ES Collections test', function(){
   });
 
   it("non object key throws an error", function () {
-    var o = WeakMap();
+    var o = new WeakMap();
     try {
       o.set("key", o);
       assert(false);
@@ -97,24 +97,24 @@ describe('ES Collections test', function(){
 
   it("Map constructor behavior", function () {
     assert(new Map instanceof Map);
-    assert(Map() instanceof Map);
+    assert(new Map() instanceof Map);
     var a = 1;
     var b = {};
-    var c = Map();
+    var c = new Map();
     var m = new Map([[1,1], [b,2], [c, 3]]);
     assert(m.has(a));
     assert(m.has(b));
     assert(m.has(c));
     assert(m.size, 3);
     if ("__proto__" in {}) {
-      assert(Map().__proto__.isPrototypeOf(Map()));
-      assert(Map().__proto__ === Map.prototype);
+      assert((new Map).__proto__.isPrototypeOf(new Map()));
+      assert((new Map).__proto__ === Map.prototype);
     }
   });
 
   it("Map#size - Mozilla only", function () {
     var
-      o = Map()
+      o = new Map()
     ;
     if ("size" in o) {
       assert(o.size === 0);
@@ -127,7 +127,7 @@ describe('ES Collections test', function(){
 
   it("Map#has", function () {
     var
-      o = Map(),
+      o = new Map(),
       generic = {},
       callback = function () {}
     ;
@@ -138,7 +138,7 @@ describe('ES Collections test', function(){
 
   it("Map#get", function () {
     var
-      o = Map(),
+      o = new Map(),
       generic = {},
       callback = function () {}
     ;
@@ -150,7 +150,7 @@ describe('ES Collections test', function(){
 
   it("Map#set", function () {
     var
-      o = Map(),
+      o = new Map(),
       generic = {},
       callback = function () {}
     ;
@@ -185,7 +185,7 @@ describe('ES Collections test', function(){
 
   it("Map#['delete']", function () {
     var
-      o = Map(),
+      o = new Map(),
       generic = {},
       callback = function () {}
     ;
@@ -203,7 +203,7 @@ describe('ES Collections test', function(){
   });
 
   it("non object key does not throw an error", function () {
-    var o = Map();
+    var o = new Map();
     try {
       o.set("key", o);
       assert(true);
@@ -244,7 +244,7 @@ describe('ES Collections test', function(){
   });
 
   it("Map#forEach", function () {
-    var o = Map(), i;
+    var o = new Map(), i;
     o.set("key 0", 0);
     o.set("key 1", 1);
     if ("forEach" in o) {
@@ -259,7 +259,7 @@ describe('ES Collections test', function(){
   });
 
   it("Map#clear", function(){
-    var o = Map();
+    var o = new Map();
     o.set(1, '1');
     o.set(2, '2');
     o.set(3, '3');
@@ -273,20 +273,20 @@ describe('ES Collections test', function(){
 
   it("Set constructor behavior", function () {
     assert(new Set instanceof Set);
-    assert(Set() instanceof Set);
-    var s = Set([1,2]);
+    assert(new Set() instanceof Set);
+    var s = new Set([1,2]);
     assert(s.has(1));
     assert(s.has(2));
     assert(s.size, 2);
     if ("__proto__" in {}) {
-      assert(Set().__proto__.isPrototypeOf(Set()));
-      assert(Set().__proto__ === Set.prototype);
+      assert((new Set).__proto__.isPrototypeOf(new Set()));
+      assert((new Set).__proto__ === Set.prototype);
     }
   });
 
   it("Set#size - Mozilla only", function () {
     var
-      o = Set()
+      o = new Set()
     ;
     if ("size" in o) {
       assert(o.size === 0);
@@ -298,14 +298,14 @@ describe('ES Collections test', function(){
   });
 
   it("Set#add", function () {
-    var o = Set();
+    var o = new Set();
     assert(o.add(NaN));
     assert(o.has(NaN));
   });
 
   it("Set#['delete']", function () {
     var
-      o = Set(),
+      o = new Set(),
       generic = {},
       callback = function () {}
     ;
@@ -356,7 +356,7 @@ describe('ES Collections test', function(){
 
   it("Set#has", function () {
     var
-      o = Set(),
+      o = new Set(),
       generic = {},
       callback = function () {}
     ;
@@ -366,7 +366,7 @@ describe('ES Collections test', function(){
   });
 
   it("Set#forEach", function () {
-    var o = Set(), i = 0;
+    var o = new Set(), i = 0;
     o.add("value 0");
     o.add("value 1");
     if ("forEach" in o) {
@@ -382,7 +382,7 @@ describe('ES Collections test', function(){
   });
 
   it("Set#clear", function(){
-    var o = Set();
+    var o = new Set();
     o.add(1);
     o.add(2);
     o.clear();
@@ -396,21 +396,21 @@ describe('ES Collections test', function(){
 
   it("WeakSet constructor behavior", function () {
     assert(new WeakSet instanceof WeakSet);
-    assert(WeakSet() instanceof WeakSet);
+    assert((new WeakSet) instanceof WeakSet);
     var a = {}, b = {};
-    var s = WeakSet([a, b]);
+    var s = new WeakSet([a, b]);
     assert(s.has(a) && s.has(b));
     if ("__proto__" in {}) {
-      assert(WeakSet().__proto__.isPrototypeOf(WeakSet()));
-      assert(WeakSet().__proto__ === WeakSet.prototype);
+      assert((new WeakSet).__proto__.isPrototypeOf(new WeakSet()));
+      assert((new WeakSet).__proto__ === WeakSet.prototype);
     }
   });
 
   it("Set#add, WeakSet#add, Map#set and WeakMap#set are chainable now", function(){
-    var s = Set();
-    var ws = WeakSet();
-    var m = Map();
-    var wm = WeakMap();
+    var s = new Set();
+    var ws = new WeakSet();
+    var m = new Map();
+    var wm = new WeakMap();
     var a = {}, b = {};
 
     s.add(1).add(2);
