@@ -32,10 +32,12 @@
       get: sharedGet,
       // Map#set(key:void*, value:void*):void
       set: sharedSet,
-      // Map#keys(void):Array === not in specs
+      // Map#keys(void):Iterator
       keys: sharedKeys,
-      // Map#values(void):Array === not in specs
+      // Map#values(void):Iterator
       values: sharedValues,
+      // Map#entries(void):Iterator
+      entries: mapEntries,
       // Map#forEach(callback:Function, context:void*):void ==> callback.call(context, key, value, mapObject) === not in specs`
       forEach: sharedForEach,
       // Map#clear():
@@ -53,8 +55,12 @@
       'delete': sharedDelete,
       // Set#clear():
       clear: sharedClear,
-      // Set#values(void):Array === not in specs
+      // Set#keys(void):Iterator
+      keys: sharedValues, // specs actually say "the same function object as the initial value of the values property"
+      // Set#values(void):Iterator
       values: sharedValues,
+      // Set#entries(void):Iterator
+      entries: setEntries,
       // Set#forEach(callback:Function, context:void*):void ==> callback.call(context, value, index) === not in specs
       forEach: sharedSetIterate
     });
@@ -168,19 +174,34 @@
   }
 
   /** keys, values, and iterate related methods */
-  function sharedValues() {
-    return sharedIterator(this._values);
-  }
-
   function sharedKeys() {
     return sharedIterator(this._keys);
   }
 
-  function sharedIterator(array) {
-    var i = 0, done = false;
+  function sharedValues() {
+    return sharedIterator(this._values);
+  }
+
+  function mapEntries() {
+    return sharedIterator(this._keys, this._values);
+  }
+
+  function setEntries() {
+    return sharedIterator(this._values, this._values);
+  }
+
+  function sharedIterator(array, array2) {
+    var j = 0, done = false;
     return {
       next: function() {
-        return (!done && i < array.length)? { done: false, value: array[i++]}: { done: (done = true) };
+        var v;
+        if (!done && j < array.length) {
+          v = array2 ? [array[j], array2[j]]: array[j];
+          j += 1;
+        } else {
+          done = true;
+        }
+        return { done: done, value: v };
       }
     };
   }
