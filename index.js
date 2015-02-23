@@ -62,7 +62,7 @@
       // Set#entries(void):Iterator
       entries: setEntries,
       // Set#forEach(callback:Function, context:void*):void ==> callback.call(context, value, index) === not in specs
-      forEach: sharedSetIterate
+      forEach: sharedForEach
     });
   }
 
@@ -89,6 +89,7 @@
       if (!this || this.constructor !== Collection) return new Collection(a);
       this._keys = [];
       this._values = [];
+      this._itp = []; // iteration pointers
       this.objectOnly = objectOnly;
 
       //parse initial iterable argument passed
@@ -127,6 +128,8 @@
     if (this.has(key)) {
       this._keys.splice(i, 1);
       this._values.splice(i, 1);
+      // update iteration pointers
+      this._itp.forEach(function(p) { if (i < p[0]) p[0]--; });
     }
     // Aurora here does it while Canary doesn't
     return -1 < i;
@@ -175,31 +178,33 @@
 
   /** keys, values, and iterate related methods */
   function sharedKeys() {
-    return sharedIterator(this._keys);
+    return sharedIterator(this._itp, this._keys);
   }
 
   function sharedValues() {
-    return sharedIterator(this._values);
+    return sharedIterator(this._itp, this._values);
   }
 
   function mapEntries() {
-    return sharedIterator(this._keys, this._values);
+    return sharedIterator(this._itp, this._keys, this._values);
   }
 
   function setEntries() {
-    return sharedIterator(this._values, this._values);
+    return sharedIterator(this._itp, this._values, this._values);
   }
 
-  function sharedIterator(array, array2) {
-    var j = 0, done = false;
+  function sharedIterator(itp, array, array2) {
+    var p = [0], done = false;
+    itp.push(p);
     return {
       next: function() {
-        var v;
-        if (!done && j < array.length) {
-          v = array2 ? [array[j], array2[j]]: array[j];
-          j += 1;
+        var v, k = p[0];
+        if (!done && k < array.length) {
+          v = array2 ? [array[k], array2[k]]: array[k];
+          p[0]++;
         } else {
           done = true;
+          itp.splice(itp.indexOf(p), 1);
         }
         return { done: done, value: v };
       }
@@ -211,18 +216,12 @@
   }
 
   function sharedForEach(callback, context) {
-    var self = this;
-    var values = self._values.slice();
-    self._keys.slice().forEach(function(key, n){
-      callback.call(context, values[n], key, self);
-    });
-  }
-
-  function sharedSetIterate(callback, context) {
-    var self = this;
-    self._values.slice().forEach(function(value){
-      callback.call(context, value, value, self);
-    });
+    var it = this.entries();
+    for (;;) {
+      var r = it.next();
+      if (r.done) break;
+      callback.call(context, r.value[1], r.value[0], this);
+    }
   }
 
 })(typeof exports != 'undefined' && typeof global != 'undefined' ? global : window );
