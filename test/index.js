@@ -258,6 +258,25 @@ describe('ES Collections test', function(){
     }
   });
 
+  it("Map#forEach with mutations", function () {
+    var o = new Map([["0", 0], ["1", 1], ["2", 2]]), seen = [];
+    o.forEach(function (value, key, obj) {
+      seen.push(value);
+      assert(obj === o);
+      assert(""+value === key);
+      // mutations work as expected
+      if (value === 1) {
+        o.delete("0"); // remove from before current index
+        o.delete("2"); // remove from after current index
+        o.set("3", 3); // insertion
+      } else if (value === 3) {
+        o.set("0", 0); // insertion at the end
+      }
+    });
+    assert(JSON.stringify(seen) === JSON.stringify([0, 1, 3, 0]));
+    assert(JSON.stringify(o._values) === JSON.stringify([1, 3, 0]));
+  });
+
   it("Map#clear", function(){
     var o = new Map();
     o.set(1, '1');
@@ -381,6 +400,25 @@ describe('ES Collections test', function(){
     }
   });
 
+  it("Set#forEach with mutations", function () {
+    var o = new Set([0, 1, 2]), seen = [];
+    o.forEach(function (value, sameValue, obj) {
+      seen.push(value);
+      assert(obj === o);
+      assert(value === sameValue);
+      // mutations work as expected
+      if (value === 1) {
+        o.delete(0); // remove from before current index
+        o.delete(2); // remove from after current index
+        o.add(3); // insertion
+      } else if (value === 3) {
+        o.add(0); // insertion at the end
+      }
+    });
+    assert(JSON.stringify(seen) === JSON.stringify([0, 1, 3, 0]));
+    assert(JSON.stringify(o._values) === JSON.stringify([1, 3, 0]));
+  });
+
   it("Set#clear", function(){
     var o = new Set();
     o.add(1);
@@ -388,7 +426,6 @@ describe('ES Collections test', function(){
     o.clear();
     assert(!o.size);
   });
-
 
   it("WeakSet existence", function () {
     assert(WeakSet);
