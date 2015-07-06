@@ -1,3 +1,10 @@
+// test the polyfill
+(this.window || global).Map = undefined;
+(this.window || global).Set = undefined;
+(this.window || global).WeakMap = undefined;
+(this.window || global).WeakSet = undefined;
+
+
 var assert = require('better-assert');
 // require('../index');
 require('../es6-collections');
