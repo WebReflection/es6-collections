@@ -21,7 +21,7 @@
     }, true);
   }
 
-  if (typeof Map == 'undefined' || !(new Map).values().next) {
+  if (typeof Map == 'undefined' || typeof ((new Map).values) !== 'function' || !(new Map).values().next) {
     exports.Map = createCollection({
       // WeakMap#delete(key:void*):boolean
       'delete': sharedDelete,
@@ -45,7 +45,7 @@
     });
   }
 
-  if (typeof Set == 'undefined' || !(new Set).values().next) {
+  if (typeof Set == 'undefined' || typeof ((new Set).values) !== 'function' || !(new Set).values().next) {
     exports.Set = createCollection({
       // Set#has(value:void*):boolean
       has: setHas,
