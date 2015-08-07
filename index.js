@@ -173,6 +173,7 @@
   }
 
   function sharedClear() {
+    (this._keys || 0).length =
     this._values.length = 0;
   }
 
