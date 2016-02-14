@@ -2,7 +2,7 @@
   //shared pointer
   var i;
   //shortcuts
-  var defineProperty = Object.defineProperty, is = function(a,b) { return isNaN(a)? isNaN(b): a === b; };
+  var defineProperty = Object.defineProperty, is = function(a,b) { return (a === b) || (a !== a && b !== b) };
 
 
   //Polyfill global objects
