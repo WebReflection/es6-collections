@@ -6,6 +6,17 @@ ES6 Harmony Collections [![build status](https://secure.travis-ci.org/WebReflect
 ](https://ci.testling.com/WebReflection/es6-collections)
 
 
+# Deprecated
+
+This is a very old polyfill which served old browser decently for the last 4+ years.
+I am not actively maintaining this project but I would eventually accept PRs if you really need to use it.
+
+Please have a look at [better alternatives such ES-Shims](https://github.com/paulmillr/es6-shim)
+
+- - - 
+
+
+
 The aim of this repository is to provide an **unobtrusive, performances oriented** shim for ES6 collections such **WeakMap**, **Map**, and **Set**.
 
 These global functions are already available in Firefox Nightly and Chrome Dev channel through *Enable Experimental JavaScript* in *chrome://flags/* section.
